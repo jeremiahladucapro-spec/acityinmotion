@@ -1,5 +1,4 @@
-sha="$(git -C "$ROOT" rev-parse --short HEAD 2>/dev/null || true)"
-case "$sha" in *[!0-9a-f]*|"") sha="$(printf %.7s "${WORKERS_CI_COMMIT_SHA:-local}")" ;; esac#!/bin/sh
+#!/bin/sh
 # Build acityinmotion.com into ./dist.
 # Runs in Cloudflare Workers Builds (build command: sh pipeline/build_site.sh)
 # and locally. Plain POSIX sh: no Node needed to build, only to deploy.
@@ -15,12 +14,13 @@ mkdir -p "$OUT"
 cp -R "$SRC"/. "$OUT"/
 find "$OUT" -name '.DS_Store' -delete
 
-# Fail the build if a page points at a local file that is not in the repo.
-# Skips absolute URLs, anchors, mailto/tel, and JS template strings.
+# Fail the build if a page points at a local page, script, or stylesheet
+# that is not in the repo. Missing media is reported as a warning.
+# Skips HTML comments, absolute URLs, anchors, mailto/tel, JS templates.
 echo "==> Checking local links"
 missing=0
 for page in "$OUT"/*.html; do
-  perl -0pe "s/<!--.*?-->//gs" "$page" \
+  perl -0pe 's/<!--.*?-->//gs' "$page" \
     | grep -oE '(href|src)="[^"]+"' \
     | sed -E 's/^(href|src)="//; s/"$//' \
     | grep -vE '^(https?:|//|#|mailto:|tel:|data:|\$)' \
@@ -42,9 +42,14 @@ if [ -f "$OUT/.missing" ]; then
   rm -f "$OUT/.missing"
 fi
 
-# Build stamp, readable at /build.txt. Workers Builds sets WORKERS_CI_*.
-sha="${WORKERS_CI_COMMIT_SHA:-$(git -C "$ROOT" rev-parse --short HEAD 2>/dev/null || echo local)}"
-branch="${WORKERS_CI_BRANCH:-$(git -C "$ROOT" symbolic-ref --short -q HEAD 2>/dev/null || echo local)}"
+# Build stamp, readable at /build.txt.
+# Prefer git; fall back to the WORKERS_CI_* variables Cloudflare sets.
+sha="$(git -C "$ROOT" rev-parse --short HEAD 2>/dev/null || true)"
+case "$sha" in
+  ""|*[!0-9a-f]*) sha="$(printf '%.7s' "${WORKERS_CI_COMMIT_SHA:-unknown}")" ;;
+esac
+branch="$(git -C "$ROOT" symbolic-ref --short -q HEAD 2>/dev/null || true)"
+[ -n "$branch" ] || branch="${WORKERS_CI_BRANCH:-unknown}"
 printf 'site=acityinmotion.com\ncommit=%s\nbranch=%s\nbuilt=%s\n' \
   "$sha" "$branch" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > "$OUT/build.txt"
 
