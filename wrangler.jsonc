@@ -1,0 +1,13 @@
+// Cloudflare Worker config for acityinmotion.com.
+// Static site only: no Worker script, Cloudflare serves ./dist as assets.
+// Same shape as the deep-street project.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "acityinmotion",
+  "compatibility_date": "2026-11-14",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

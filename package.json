@@ -1,0 +1,13 @@
+{
+  "name": "acityinmotion",
+  "private": true,
+  "description": "acityinmotion.com, built by pipeline/build_site.sh and deployed as a Cloudflare Worker with static assets",
+  "scripts": {
+    "build": "sh pipeline/build_site.sh",
+    "deploy": "sh pipeline/build_site.sh && wrangler deploy",
+    "preview": "sh pipeline/build_site.sh && wrangler dev"
+  },
+  "devDependencies": {
+    "wrangler": "^4"
+  }
+}

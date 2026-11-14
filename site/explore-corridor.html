@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Safer Corridor Explorer</title>
+<meta name="description" content="Spin a 3D model of one city block and click each part to see how protected bike lanes, corner islands, bus platforms and raised crossings make streets safer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap">
+<style>
+  html, body { margin: 0; }
+  [hidden] { display: none !important; }
+  :root {
+    --ground: #F5F1E8;
+    --surface: #FFFFFF;
+    --ink: #262A3D;
+    --ink-2: #3A4568;
+    --muted: #6B7280;
+    --rule: #E3DDCF;
+    --accent: #5F4E86;
+    --accent-soft: #EEE9F6;
+    --accent-line: #B8A6D9;
+    --stage: #2B3550;
+    --stage-ink: #F5F1E8;
+    --hl: #DFA741;
+    --focus: #5F4E86;
+    --serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --ground: #1B2031; --surface: #242A3F; --ink: #F5F1E8; --ink-2: #D9D3E6; --muted: #A3A8BD;
+      --rule: #353C56; --accent: #B8A6D9; --accent-soft: #2E3452; --accent-line: #5F4E86; --focus: #B8A6D9;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --ground: #1B2031; --surface: #242A3F; --ink: #F5F1E8; --ink-2: #D9D3E6; --muted: #A3A8BD;
+    --rule: #353C56; --accent: #B8A6D9; --accent-soft: #2E3452; --accent-line: #5F4E86; --focus: #B8A6D9;
+  }
+
+  * { box-sizing: border-box; }
+  body { background: var(--ground); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1320px; margin: 0 auto; padding-inline: clamp(16px, 3vw, 40px); padding-block: 28px 40px; display: grid; gap: 22px; }
+
+  .intro { display: grid; gap: 8px; max-width: 70ch; }
+  .eyebrow { font-family: var(--mono); font-size: 12.5px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin: 0; }
+  h1 { font-family: var(--serif); font-weight: 700; font-size: clamp(30px, 4.4vw, 50px); line-height: 1.06; letter-spacing: -0.01em; margin: 0; text-wrap: balance; }
+  .lede { margin: 0; color: var(--ink-2); font-size: 17px; max-width: 62ch; }
+
+  .explorer { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 18px; align-items: start; }
+  .stage-col { display: grid; gap: 8px; min-width: 0; }
+  .caption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; margin: 0; font: 500 11.5px/1.4 var(--mono); letter-spacing: 0.05em; color: var(--muted); }
+  @media (max-width: 960px) { .explorer { grid-template-columns: minmax(0, 1fr); } }
+
+  .stage { position: relative; background: var(--stage); border-radius: 14px; overflow: hidden; height: min(74vh, 700px); min-height: 380px; touch-action: none; }
+  @media (max-width: 960px) { .stage { height: 62vh; min-height: 340px; } }
+  .stage canvas { display: block; width: 100%; height: 100%; cursor: grab; outline: none; }
+  .stage canvas:active { cursor: grabbing; }
+
+  .markers { position: absolute; inset: 0; pointer-events: none; }
+  .marker { position: absolute; left: 0; top: 0; z-index: 1; pointer-events: auto; display: flex; align-items: center; gap: 0; transform: translate(-15px, -15px); border: 0; padding: 0; background: none; cursor: pointer; font: inherit; }
+  .marker .num { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: #fff; font-weight: 700; font-size: 13.5px; border: 2.5px solid #fff; box-shadow: 0 3px 10px rgba(16, 20, 36, 0.35); font-variant-numeric: tabular-nums; transition: transform .18s ease, background .18s ease; }
+  :root[data-theme="dark"] .marker .num { background: #5F4E86; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .marker .num { background: #5F4E86; } }
+  .marker .name { max-width: 0; overflow: hidden; white-space: nowrap; background: #fff; color: #262A3D; font-size: 13.5px; font-weight: 600; border-radius: 999px; padding: 0; margin-left: -8px; line-height: 30px; transition: max-width .25s ease, padding .25s ease; box-shadow: 0 3px 10px rgba(16, 20, 36, 0.25); position: relative; z-index: -1; }
+  .marker:hover .name, .marker:focus-visible .name, .marker.on .name { max-width: 320px; padding: 0 14px 0 16px; }
+  .marker.on .num { background: var(--hl); color: #262A3D; transform: scale(1.12); }
+  .marker:focus-visible { outline: none; }
+  .marker:focus-visible .num { box-shadow: 0 0 0 3px var(--hl); }
+  .markers.off .marker { display: none; }
+
+  .tools { position: absolute; left: 12px; top: 12px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .tool { font: 600 13px/1 var(--sans); color: #F5F1E8; background: rgba(38, 42, 61, 0.72); border: 1px solid rgba(184, 166, 217, 0.45); border-radius: 999px; padding: 9px 13px; cursor: pointer; backdrop-filter: blur(4px); }
+  .tool:hover { background: rgba(95, 78, 134, 0.9); }
+  .tool[aria-pressed="true"] { background: #F5F1E8; color: #262A3D; border-color: #F5F1E8; }
+  .tool:focus-visible { outline: 2px solid var(--hl); outline-offset: 2px; }
+  .webgl-fail { position: absolute; inset: 0; display: grid; place-items: center; padding: 24px; color: #F5F1E8; text-align: center; }
+
+  .panel { display: grid; grid-template-rows: auto 1fr; gap: 14px; min-height: 0; }
+  @media (max-width: 960px) { .panel { grid-template-rows: auto auto; } .detail { order: -1; } }
+
+  .detail { background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 20px 20px 18px; display: grid; gap: 12px; align-content: start; overflow: auto; }
+  .detail .head { display: flex; align-items: center; gap: 12px; }
+  .badge { flex: none; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--hl); color: #262A3D; font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums; }
+  .badge.overview { background: var(--accent-soft); color: var(--accent); font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; }
+  .detail h2 { font-family: var(--serif); font-weight: 700; font-size: 25px; line-height: 1.12; margin: 0; text-wrap: balance; }
+  .detail h3 { font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin: 4px 0 -6px; }
+  .detail p { margin: 0; color: var(--ink-2); font-size: 15px; }
+  .detail .more { font-size: 14px; color: var(--ink-2); }
+  .detail a { color: var(--accent); font-weight: 600; text-underline-offset: 3px; }
+  .detail .nav { display: flex; justify-content: space-between; gap: 8px; margin-top: 4px; padding-top: 12px; border-top: 1px solid var(--rule); }
+  .navbtn { font: 600 13.5px/1 var(--sans); color: var(--ink); background: var(--accent-soft); border: 0; border-radius: 999px; padding: 10px 14px; cursor: pointer; }
+  .navbtn:hover { background: var(--accent-line); color: #262A3D; }
+  .navbtn:focus-visible, .part:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  .parts { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  @media (max-width: 960px) { .parts { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); } }
+  .part { width: 100%; display: flex; align-items: center; gap: 9px; text-align: left; font: 600 13px/1.25 var(--sans); color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 8px 10px; cursor: pointer; min-height: 46px; }
+  .part:hover { border-color: var(--accent-line); }
+  .part .n { flex: none; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: #fff; font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  :root[data-theme="dark"] .part .n { background: #5F4E86; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .part .n { background: #5F4E86; } }
+  .part[aria-pressed="true"] { border-color: var(--hl); box-shadow: inset 0 0 0 1px var(--hl); }
+  .part[aria-pressed="true"] .n { background: var(--hl); color: #262A3D; }
+
+  .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13.5px; color: var(--muted); }
+  .foot p { margin: 0; max-width: 78ch; }
+  .foot a { color: var(--accent); font-weight: 600; text-underline-offset: 3px; }
+</style>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-1AO4dRE5cw9bBvKAG6_i9.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+</head>
+<body>
+<main class="wrap">
+  <header class="intro">
+    <p class="eyebrow"><a href="visionzero.html" style="color:inherit;text-decoration:none">← Vision Zero</a> · A City in Motion</p>
+    <h1>Anatomy of a safer corridor</h1>
+    <p class="lede">One block, ten design choices. Drag to look around, then pick a number to see what each part does and why it makes a crash less likely, or less severe when one happens.</p>
+  </header>
+
+  <section class="explorer" aria-label="Interactive 3D corridor">
+    <div class="stage-col">
+    <div class="stage" id="stage">
+      <canvas id="c" tabindex="0" aria-label="3D model of a street corridor. Use the numbered list to explore each safety feature."></canvas>
+      <div class="markers" id="markers"></div>
+      <div class="tools" role="toolbar" aria-label="View controls">
+        <button class="tool" id="t-overview" type="button">Overview</button>
+        <button class="tool" id="t-plan" type="button" aria-pressed="false">Plan view</button>
+        <button class="tool" id="t-build" type="button">Replay the build</button>
+        <button class="tool" id="t-labels" type="button" aria-pressed="true">Numbers</button>
+      </div>
+    </div>
+    <p class="caption"><span>Drag to look around · scroll or pinch to zoom · right-drag or two fingers to pan</span><span>Curbs and platforms are drawn taller than life so they read at this size.</span></p>
+    </div>
+
+    <aside class="panel" aria-label="Safety features">
+      <article class="detail" id="detail" aria-live="polite"></article>
+      <ol class="parts" id="parts"></ol>
+    </aside>
+  </section>
+
+  <footer class="foot">
+    <p>Street design patterns drawn from the National Association of City Transportation Officials' <a href="https://nacto.org/publication/urban-street-design-guide/">Urban Street Design Guide</a> and <a href="https://nacto.org/publication/transit-street-design-guide/">Transit Street Design Guide</a>. Illustration by A City in Motion.</p>
+    <p><a href="episodes.html">Hear the people who build these streets →</a></p>
+  </footer>
+</main>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+// ------------------------------------------------------------------ content
+const EPISODES = 'episodes.html#andy-boenau';
+const PARTS = [
+  { n: 1, name: 'Protected bike lanes',
+    what: 'A bike lane separated from moving traffic by a raised curb and planters, not just a painted line.',
+    why: 'Separation gives people on bikes their own space, so one driver’s mistake does not end in a crash with someone on a bike. The buffer also makes the roadway look narrower, which slows drivers down.',
+    look: 'A physical barrier between the bike lane and traffic that continues right up to the intersection.' },
+  { n: 2, name: 'Corner safety islands',
+    what: 'Raised concrete islands tucked into each corner, between the car lanes and the bike and walking paths.',
+    why: 'They force turning drivers into a tighter, slower turn and move the point where paths cross further forward, so drivers see people on bikes and on foot before they meet.',
+    look: 'Small islands at the corners with the bike lane bending around them and a short, square crossing.' },
+  { n: 3, name: 'High-visibility crosswalks',
+    what: 'Wide, ladder-style stripes across every leg of the intersection, with stop bars set back from them.',
+    why: 'Drivers can see them from further away, and they mark exactly where people will be walking. Setting the stop bar back keeps vehicles out of the crossing. They work best alongside the other tools here, not on their own.',
+    look: 'Bold white bars instead of two thin parallel lines.' },
+  { n: 4, name: 'Median refuge islands',
+    what: 'Raised islands in the middle of the street where people can wait partway across.',
+    why: 'One long crossing becomes shorter ones, each facing traffic from one direction. That matters most for anyone who walks slowly, including kids, older adults and people using wheelchairs.',
+    look: 'A raised pad or a level cut-through in the median, lined up with the crosswalk.' },
+  { n: 5, name: 'Center-running bus lanes',
+    what: 'Red lanes in the middle of the street reserved for buses.',
+    why: 'Buses stay clear of parked cars, deliveries and right-turning traffic at the curb, so trips are faster and more reliable. Large vehicles also make fewer lane changes across other traffic.',
+    look: 'Red pavement and bus-only markings down the center of the street.' },
+  { n: 6, name: 'Boarding platforms',
+    what: 'Raised islands beside the bus lanes with shelters, seating and a textured warning strip along the edge.',
+    why: 'Riders wait out of traffic and step straight onto the bus. A raised, level edge helps people with strollers, walkers or wheelchairs, and the platforms are reached from a marked crosswalk at the signal.',
+    look: 'A platform in the middle of the street, connected to a crosswalk.' },
+  { n: 7, name: 'Raised midblock crossing',
+    what: 'A crosswalk lifted to sidewalk height in the middle of a long block, with pedestrian-activated flashing beacons.',
+    why: 'Drivers have to slow down to go over it, and people walking stay on one level the whole way. It puts a crossing where people actually want to cross instead of sending them to the corner.',
+    look: 'A crosswalk that rises like a speed table, with beacons at each end.' },
+  { n: 8, name: 'Signals with a pedestrian head start',
+    what: 'A leading pedestrian interval: the walk signal comes on a few seconds before drivers get a green light.',
+    why: 'People are already in the crosswalk, and easy to see, by the time turning drivers start to move. It is a change to the signal timing, so it costs very little.',
+    look: 'The walk symbol lights up while cars beside you are still stopped at a red.' },
+  { n: 9, name: 'Street trees',
+    what: 'Trees along the sidewalks, the medians and the planted strips between lanes.',
+    why: 'A line of trees makes the street feel narrower, which tends to bring driving speeds down. It also gives shade and puts something solid between people walking and moving traffic.',
+    look: 'Trees between the sidewalk and the travel lanes, not only on private property.' },
+  { n: 10, name: 'Narrower travel lanes',
+    what: 'General traffic lanes about 10 to 11 feet wide instead of 12 feet or more.',
+    why: 'Wide lanes invite higher speeds, and speed is what decides whether a crash is survivable. Narrower lanes nudge drivers to slow down and free up room for bike lanes, platforms and medians.',
+    look: 'Lanes that feel snug rather than highway-wide.',
+    ep: 'Andy Boenau of the City of Richmond explains why severe crashes trace back to design speed.' },
+];
+
+// ------------------------------------------------------------------ palette
+const HEX = {
+  navy: '#2B3550', navy2: '#3A4568', cream: '#F5F1E8', line: '#E3DDCF', lav: '#B8A6D9', lavDk: '#5F4E86',
+  slate: '#6B7280', grey: '#C3C9D6', greyDk: '#9AA3B5', blue: '#5C86BE', blueDk: '#47699A',
+  red: '#C4584F', amber: '#DFA741', green: '#5E9E76', grass: '#9CCBA8', canopy: '#5E9E76', canopy2: '#7DB38F',
+  trunk: '#7A6A5A', platform: '#E9E3F5', table: '#9AA3B5', white: '#FFFFFF', skin: '#E8C9A8',
+  bldg: ['#F5F1E8', '#E9E3F5', '#D8CEEA', '#FFFFFF', '#E3DDCF'],
+};
+const col = (h) => new THREE.Color(h);
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ------------------------------------------------------------------ renderer
+const stage = document.getElementById('stage');
+const canvas = document.getElementById('c');
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+} catch (e) {
+  stage.insertAdjacentHTML('beforeend', '<div class="webgl-fail"><p>This 3D view needs WebGL, which your browser has turned off. The list of features still works.</p></div>');
+}
+if (renderer) {
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setClearColor(col(HEX.navy), 1);
+}
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(30, 1, 5, 2000);
+const controls = renderer ? new OrbitControls(camera, canvas) : null;
+
+// ------------------------------------------------------------------ builder
+const LH = new THREE.Vector3(0.55, 0, 0.83).normalize();
+const L3 = new THREE.Vector3(0.45, 1.0, 0.6).normalize();
+class Builder {
+  constructor() { this.p = []; this.c = []; }
+  tri(a, b, c, k) { this.p.push(...a, ...b, ...c); for (let i = 0; i < 3; i++) this.c.push(k.r, k.g, k.b); }
+  prism(pts, y0, y1, top, side) {
+    const t = col(top), s = col(side || top);
+    const cx = pts.reduce((a, p) => a + p[0], 0) / pts.length, cz = pts.reduce((a, p) => a + p[1], 0) / pts.length;
+    for (const [i, j, k] of THREE.ShapeUtils.triangulateShape(pts.map(p => new THREE.Vector2(p[0], p[1])), []))
+      this.tri([pts[i][0], y1, pts[i][1]], [pts[j][0], y1, pts[j][1]], [pts[k][0], y1, pts[k][1]], t);
+    if (y1 - y0 < 1e-6) return;
+    for (let i = 0; i < pts.length; i++) {
+      const a = pts[i], b = pts[(i + 1) % pts.length];
+      let nx = b[1] - a[1], nz = -(b[0] - a[0]);
+      if (nx * ((a[0] + b[0]) / 2 - cx) + nz * ((a[1] + b[1]) / 2 - cz) < 0) { nx = -nx; nz = -nz; }
+      const len = Math.hypot(nx, nz) || 1;
+      const sc = s.clone().multiplyScalar(0.6 + 0.3 * Math.max(0, (nx * LH.x + nz * LH.z) / len));
+      this.tri([a[0], y0, a[1]], [b[0], y0, b[1]], [b[0], y1, b[1]], sc);
+      this.tri([a[0], y0, a[1]], [b[0], y1, b[1]], [a[0], y1, a[1]], sc);
+    }
+  }
+  box(x0, x1, z0, z1, y0, y1, top, side) { this.prism([[x0, z0], [x1, z0], [x1, z1], [x0, z1]], y0, y1, top, side); }
+  geo(g, m, hex, amb = 0.62) {
+    const G = (g.index ? g.toNonIndexed() : g.clone()).applyMatrix4(m); G.computeVertexNormals();
+    const P = G.attributes.position.array, N = G.attributes.normal.array, c = col(hex);
+    for (let i = 0; i < P.length; i += 9) {
+      const n = new THREE.Vector3(N[i], N[i + 1], N[i + 2]);
+      const k = c.clone().multiplyScalar(n.y > 0.97 ? 1 : amb + (1 - amb) * Math.max(0, n.dot(L3)));
+      this.tri([P[i], P[i + 1], P[i + 2]], [P[i + 3], P[i + 4], P[i + 5]], [P[i + 6], P[i + 7], P[i + 8]], k);
+    }
+  }
+  mesh(opts = {}) {
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(this.p, 3));
+    g.setAttribute('color', new THREE.Float32BufferAttribute(this.c, 3));
+    return new THREE.Mesh(g, new THREE.MeshBasicMaterial({ vertexColors: true, side: THREE.DoubleSide, ...opts }));
+  }
+}
+const edgeMat = new THREE.LineBasicMaterial({ color: col('#262A3D'), transparent: true, opacity: 0.28 });
+function outline(mesh, angle = 25) { const e = new THREE.LineSegments(new THREE.EdgesGeometry(mesh.geometry, angle), edgeMat); mesh.add(e); return mesh; }
+const octa = (x, z, r, n = 8) => { const p = []; for (let i = 0; i < n; i++) { const a = (i + 0.5) / n * Math.PI * 2; p.push([x + r * Math.cos(a), z + r * Math.sin(a)]); } return p; };
+
+// ------------------------------------------------------------------ layout (metres; x east, z south)
+const X0 = -38, X1 = 72, Z0 = -36, Z1 = 36, HC = 0.6, HP = 0.8, MIDX = [46, 51];
+const SW = [-18, -14], BK = [-14, -12], BF = [-12, -9.6], GL = [-9.6, -6.4], ST = [-6.4, -3.8], BL = [-3.8, -0.6], MD = [-0.6, 0.6];
+const XSW = [-12, -9], XBK = [-9, -7], XBF = [-7, -4.6], XGL = [-4.6, -1.4], XMD = [-1.4, 1.4];
+const mz = (a) => [-a[1], -a[0]];
+const WB_PLAT = [-35, -16], EB_PLAT = [16, 40];
+const paint = (f = -1) => ({ polygonOffset: true, polygonOffsetFactor: f, polygonOffsetUnits: 4 * f });
+
+const G = {};                 // named groups that rise during the build
+function group(name, ...meshes) { const g = new THREE.Group(); meshes.forEach(m => g.add(m)); scene.add(g); G[name] = g; return g; }
+
+// base slab
+{ const b = new Builder(); b.box(X0, X1, Z0, Z1, -3.2, 0, HEX.slate, HEX.lavDk); scene.add(outline(b.mesh(), 60)); }
+
+// sidewalks, land, park, tactile pads, benches
+{
+  const b = new Builder();
+  for (const zb of [SW, mz(SW)]) { b.box(X0, -12, zb[0], zb[1], 0, HC, HEX.line); b.box(12, X1, zb[0], zb[1], 0, HC, HEX.line); }
+  for (const xb of [XSW, mz(XSW)]) { b.box(xb[0], xb[1], Z0, -14, 0, HC, HEX.line); b.box(xb[0], xb[1], 14, Z1, 0, HC, HEX.line); }
+  for (const [a, c, d, e] of [[X0, -12, Z0, -18], [12, X1, Z0, -18], [X0, -12, 18, Z1], [12, X1, 18, Z1]]) b.box(a, c, d, e, 0, HC, HEX.cream);
+  b.box(-36, -14, 21, 34, HC, HC + 0.2, HEX.grass, HEX.green);
+  // tactile warning pads at crosswalk landings
+  const pad = (x0, x1, z0, z1) => b.box(x0, x1, z0, z1, HC, HC + 0.03, HEX.amber);
+  for (const s of [-1, 1]) {
+    pad(12.6, 15.8, s < 0 ? -14.6 : 14.0, s < 0 ? -14.0 : 14.6); pad(-15.8, -12.6, s < 0 ? -14.6 : 14.0, s < 0 ? -14.0 : 14.6);
+    pad(s < 0 ? -9.6 : 9.0, s < 0 ? -9.0 : 9.6, -17.8, -14.6); pad(s < 0 ? -9.6 : 9.0, s < 0 ? -9.0 : 9.6, 14.6, 17.8);
+    pad(MIDX[0] + 0.3, MIDX[1] - 0.3, s < 0 ? -14.6 : 14.0, s < 0 ? -14.0 : 14.6);
+  }
+  // benches
+  for (const [x, z] of [[-26, -15.2], [30, -15.2], [58, 15.2], [-6 - 20, 15.2]]) { b.box(x - 1, x + 1, z - 0.3, z + 0.3, HC + 0.4, HC + 0.5, HEX.blueDk); b.box(x - 0.9, x - 0.7, z - 0.2, z + 0.2, HC, HC + 0.4, HEX.navy2); b.box(x + 0.7, x + 0.9, z - 0.2, z + 0.2, HC, HC + 0.4, HEX.navy2); }
+  group('sidewalks', outline(b.mesh(), 30));
+}
+
+// paint: bike lanes (+ crossing dashes), bus lanes, lane arrows
+const bikePaint = (() => {
+  const b = new Builder();
+  for (const zb of [BK, mz(BK)]) { b.box(X0, MIDX[0], zb[0], zb[1], 0.01, 0.01, HEX.green); b.box(MIDX[1], X1, zb[0], zb[1], 0.01, 0.01, HEX.green); }
+  for (const xb of [XBK, mz(XBK)]) b.box(xb[0], xb[1], Z0, Z1, 0.01, 0.01, HEX.green);
+  for (let x = -9; x < 9; x += 1.6) for (const z of [-14, -12, 12, 14]) b.box(x, x + 0.8, z - 0.08, z + 0.08, 0.012, 0.012, HEX.white);
+  for (let z = -14; z < 14; z += 1.6) for (const x of [-9, -7, 7, 9]) b.box(x - 0.08, x + 0.08, z, z + 0.8, 0.012, 0.012, HEX.white);
+  // simple bike glyph dots along the lanes
+  for (const x of [-30, -22, 24, 34, 60]) for (const z of [-13, 13]) { b.prism(octa(x - 0.5, z, 0.35, 10), 0.013, 0.013, HEX.white); b.prism(octa(x + 0.5, z, 0.35, 10), 0.013, 0.013, HEX.white); }
+  const m = b.mesh(paint(-1)); scene.add(m); return m;
+})();
+const busPaint = (() => {
+  const b = new Builder();
+  for (const zb of [BL, mz(BL)]) for (const [a, c] of [[X0, -12], [12, MIDX[0]], [MIDX[1], X1]]) b.box(a, c, zb[0], zb[1], 0.01, 0.01, HEX.red);
+  // BUS ONLY bars
+  for (const [x, z] of [[24, -2.2], [-24, 2.2], [62, -2.2], [-6 - 26, -2.2]]) { b.box(x - 1.6, x + 1.6, z - 0.5, z - 0.3, 0.012, 0.012, HEX.white); b.box(x - 1.6, x + 1.6, z + 0.3, z + 0.5, 0.012, 0.012, HEX.white); }
+  const m = b.mesh(paint(-1)); scene.add(m); return m;
+})();
+{
+  const b = new Builder();
+  const arrow = (x, z, dir) => { const s = dir; b.prism([[x, z - 0.18], [x + s * 2.2, z - 0.18], [x + s * 2.2, z - 0.55], [x + s * 3.2, z], [x + s * 2.2, z + 0.55], [x + s * 2.2, z + 0.18], [x, z + 0.18]], 0.012, 0.012, HEX.white); };
+  arrow(22, -8, -1); arrow(-22, 8, 1); arrow(60, -8, -1); arrow(34, 8, 1);
+  scene.add(b.mesh(paint(-1)));
+}
+// general travel lanes: highlight-only surface for part 10
+const laneSurface = (() => {
+  const b = new Builder();
+  for (const zb of [GL, mz(GL)]) for (const [a, c] of [[X0, -16.4], [16.4, MIDX[0]], [MIDX[1], X1]]) b.box(a, c, zb[0], zb[1], 0.015, 0.015, HEX.white);
+  for (const xb of [XGL, mz(XGL)]) for (const [a, c] of [[Z0, -18.4], [18.4, Z1]]) b.box(xb[0], xb[1], a, c, 0.015, 0.015, HEX.white);
+  const m = b.mesh(paint(-1)); m.material.visible = false; scene.add(m); return m;
+})();
+
+// crosswalk bars + stop bars
+const bars = (() => {
+  const b = new Builder(); const y = 0.02;
+  const bar = (x0, x1, z0, z1) => b.box(x0, x1, z0, z1, y, y, HEX.white);
+  for (const [za, zb] of [[-18, -14.4], [14.4, 18]]) for (const [a, c] of [[-9, -7], [-4.6, -1.4], [1.4, 4.6], [7, 9]]) for (let x = a + 0.3; x + 0.6 <= c - 0.1; x += 1.2) bar(x, x + 0.6, za, zb);
+  for (const [xa, xb] of [[12.4, 16], [-16, -12.4]]) for (const [a, c] of [BK, GL, BL, mz(BL), mz(GL), mz(BK)]) for (let z = a + 0.3; z + 0.6 <= c - 0.1; z += 1.2) bar(xa, xb, z, z + 0.6);
+  bar(16.6, 17.0, GL[0], GL[1]); bar(16.6, 17.0, BL[0], BL[1]); bar(-17.0, -16.6, -GL[1], -GL[0]); bar(-17.0, -16.6, -BL[1], -BL[0]);
+  bar(-4.6, -1.4, -18.9, -18.5); bar(1.4, 4.6, 18.5, 18.9); bar(44.6, 45.0, -GL[1], -GL[0]); bar(52.0, 52.4, GL[0], GL[1]);
+  const m = b.mesh({ ...paint(-2), transparent: true }); scene.add(m); return m;
+})();
+
+// protected bike lane buffers with planters
+{
+  const b = new Builder();
+  for (const zb of [BF, mz(BF)]) for (const [a, c] of [[X0, -9], [9, MIDX[0]], [MIDX[1], X1]]) {
+    b.box(a, c, zb[0], zb[1], 0, HC, HEX.grey);
+    for (let x = a + 3; x < c - 2; x += 6.5) if (Math.abs(x) > 17) b.box(x, x + 2.2, zb[0] + 0.5, zb[1] - 0.5, HC, HC + 0.55, HEX.grass, HEX.green);
+  }
+  for (const xb of [XBF, mz(XBF)]) for (const [a, c] of [[Z0, -14], [14, Z1]]) {
+    b.box(xb[0], xb[1], a, c, 0, HC, HEX.grey);
+    for (let z = a + 3; z < c - 2; z += 6.5) if (Math.abs(z) > 20) b.box(xb[0] + 0.5, xb[1] - 0.5, z, z + 2.2, HC, HC + 0.55, HEX.grass, HEX.green);
+  }
+  group('buffers', outline(b.mesh()));
+}
+
+// corner safety islands with bollards
+function cornerIsland(x0, x1, z0, z1, cX, cZ, r = 1.3, steps = 8) {
+  const C = [[x0, z0], [x1, z0], [x1, z1], [x0, z1]], idx = C.findIndex(([x, z]) => x === cX && z === cZ), pts = [];
+  for (let i = 0; i < 4; i++) {
+    if (i !== idx) { pts.push(C[i]); continue; }
+    const P = C[i], A = C[(i + 3) % 4], B = C[(i + 1) % 4];
+    const da = [Math.sign(A[0] - P[0]), Math.sign(A[1] - P[1])], db = [Math.sign(B[0] - P[0]), Math.sign(B[1] - P[1])];
+    const cx = P[0] + (da[0] + db[0]) * r, cz = P[1] + (da[1] + db[1]) * r;
+    const a1 = Math.atan2(P[1] + da[1] * r - cz, P[0] + da[0] * r - cx), a2 = Math.atan2(P[1] + db[1] * r - cz, P[0] + db[0] * r - cx);
+    let d = a2 - a1; if (d > Math.PI) d -= 2 * Math.PI; if (d < -Math.PI) d += 2 * Math.PI;
+    for (let k = 0; k <= steps; k++) { const a = a1 + d * k / steps; pts.push([cx + r * Math.cos(a), cz + r * Math.sin(a)]); }
+  }
+  return pts;
+}
+const bollard = (b, x, z, base = HC) => b.prism(octa(x, z, 0.14, 8), base, base + 1.0, HEX.amber, HEX.amber);
+{
+  const b = new Builder();
+  for (const [x0, x1, z0, z1, cx, cz] of [[4.6, 7, -12, -9.6, 4.6, -9.6], [-7, -4.6, -12, -9.6, -4.6, -9.6], [4.6, 7, 9.6, 12, 4.6, 9.6], [-7, -4.6, 9.6, 12, -4.6, 9.6]]) {
+    b.prism(cornerIsland(x0, x1, z0, z1, cx, cz), 0, HC, HEX.grey);
+    bollard(b, cx + (cx > 0 ? 0.55 : -0.55), cz + (cz > 0 ? 0.55 : -0.55));
+  }
+  group('islands', outline(b.mesh()));
+}
+
+// medians (corridor centre + cross street) with nose bollards
+{
+  const b = new Builder();
+  for (const [a, c] of [[X0, -12.4], [12.4, MIDX[0]], [MIDX[1], X1]]) b.box(a, c, MD[0], MD[1], 0, HC, HEX.grey);
+  for (const [a, c] of [[Z0, -14.4], [14.4, Z1]]) b.box(XMD[0], XMD[1], a, c, 0, HC, HEX.grass, HEX.grey);
+  for (const x of [-12.8, 12.8]) bollard(b, x, 0);
+  for (const z of [-14.8, 14.8]) bollard(b, 0, z);
+  group('medians', outline(b.mesh()));
+}
+
+// planted strips (not a numbered part) and boarding platforms
+{
+  const b = new Builder();
+  for (const [a, c] of [[X0, WB_PLAT[0]], [WB_PLAT[1], -12.4], [12.4, MIDX[0]], [MIDX[1], X1]]) b.box(a, c, ST[0], ST[1], 0, HC, HEX.grass, HEX.grey);
+  for (const [a, c] of [[X0, -12.4], [12.4, EB_PLAT[0]], [EB_PLAT[1], MIDX[0]], [MIDX[1], X1]]) b.box(a, c, -ST[1], -ST[0], 0, HC, HEX.grass, HEX.grey);
+  group('strips', outline(b.mesh()));
+}
+const platforms = (() => {
+  const b = new Builder();
+  b.box(WB_PLAT[0], WB_PLAT[1], ST[0], ST[1], 0, HP, HEX.platform, HEX.lav);
+  b.box(EB_PLAT[0], EB_PLAT[1], -ST[1], -ST[0], 0, HP, HEX.platform, HEX.lav);
+  b.box(WB_PLAT[0], WB_PLAT[1], ST[1] - 0.45, ST[1] - 0.1, HP, HP + 0.02, HEX.amber);
+  b.box(EB_PLAT[0], EB_PLAT[1], -ST[1] + 0.1, -ST[1] + 0.45, HP, HP + 0.02, HEX.amber);
+  const m = outline(b.mesh()); group('platforms', m); return m;
+})();
+const shelters = (() => {
+  const b = new Builder();
+  const shelter = (x, zBack, dir) => {
+    const x0 = x - 2.6, x1 = x + 2.6, zb0 = dir < 0 ? zBack : zBack - 0.15, zb1 = dir < 0 ? zBack + 0.15 : zBack;
+    b.box(x0, x1, zb0, zb1, HP, HP + 2.5, HEX.navy2);
+    for (const px of [x0 + 0.1, x1 - 0.25]) b.box(px, px + 0.15, Math.min(zb0, zb0 - dir * 1.6), Math.max(zb1, zb1 - dir * 1.6), HP, HP + 2.7, HEX.navy);
+    b.box(x0 - 0.3, x1 + 0.3, dir < 0 ? zBack : zBack - 1.9, dir < 0 ? zBack + 1.9 : zBack, HP + 2.7, HP + 2.95, HEX.lav, HEX.lavDk);
+    b.box(x0 + 0.6, x1 - 0.6, dir < 0 ? zBack + 0.2 : zBack - 0.6, dir < 0 ? zBack + 0.6 : zBack - 0.2, HP, HP + 0.5, HEX.blueDk);
+  };
+  shelter(-31, ST[0] + 0.1, -1); shelter(-21.5, ST[0] + 0.1, -1); shelter(23, -ST[0] - 0.1, 1); shelter(33, -ST[0] - 0.1, 1);
+  const m = outline(b.mesh()); group('shelters', m); return m;
+})();
+
+// raised midblock crossing + bars + beacons
+const table = (() => {
+  const b = new Builder();
+  b.box(MIDX[0], MIDX[1], -14, 14, 0, HC, HEX.table, HEX.greyDk);
+  for (let z = -13.4; z + 0.6 <= 13.4; z += 1.2) b.box(MIDX[0] + 0.4, MIDX[1] - 0.4, z, z + 0.6, HC + 0.02, HC + 0.02, HEX.white);
+  const m = outline(b.mesh(paint(-1))); group('table', m); return m;
+})();
+const beacons = (() => {
+  const b = new Builder();
+  for (const [x, z] of [[MIDX[0] - 0.5, -14.6], [MIDX[1] + 0.5, 14.6], [MIDX[0] - 0.5, 5.1], [MIDX[1] + 0.5, -5.1]]) {
+    b.prism(octa(x, z, 0.16), 0, HC + 3.2, HEX.navy2);
+    b.box(x - 0.3, x + 0.3, z - 0.12, z + 0.12, HC + 2.5, HC + 3.0, HEX.amber);
+    b.box(x - 0.45, x + 0.45, z - 0.05, z + 0.05, HC + 3.05, HC + 3.6, HEX.amber, HEX.white);
+  }
+  const m = b.mesh(); group('beacons', m); return m;
+})();
+
+// signals and street lights
+const signals = (() => {
+  const b = new Builder();
+  const pole = (x, z, h) => b.prism(octa(x, z, 0.16), 0, h, HEX.navy2);
+  const head = (x, z, y) => {
+    b.box(x - 0.2, x + 0.2, z - 0.2, z + 0.2, y - 1.0, y, HEX.navy);
+    b.box(x - 0.12, x + 0.12, z + 0.2, z + 0.26, y - 0.3, y - 0.08, HEX.red);
+    b.box(x - 0.12, x + 0.12, z + 0.2, z + 0.26, y - 0.62, y - 0.4, HEX.amber);
+    b.box(x - 0.12, x + 0.12, z + 0.2, z + 0.26, y - 0.94, y - 0.72, HEX.green);
+  };
+  const Y = 5.6;
+  for (const [x, z, d] of [[5.8, -10.8, 'w'], [-5.8, -10.8, 's'], [-5.8, 10.8, 'e'], [5.8, 10.8, 'n']]) {
+    pole(x, z, HC + Y + 0.3);
+    const dx = d === 'w' ? -1 : d === 'e' ? 1 : 0, dz = d === 'n' ? -1 : d === 's' ? 1 : 0, ex = x + dx * 6.2, ez = z + dz * 6.2;
+    b.box(Math.min(x, ex) - 0.1, Math.max(x, ex) + 0.1, Math.min(z, ez) - 0.1, Math.max(z, ez) + 0.1, HC + Y, HC + Y + 0.2, HEX.navy2);
+    head(x + dx * 3, z + dz * 3, HC + Y - 0.05); head(x + dx * 5.6, z + dz * 5.6, HC + Y - 0.05);
+    b.box(x - 0.18, x + 0.18, z - 0.18, z + 0.18, HC + 2.2, HC + 2.8, HEX.navy);
+    b.box(x - 0.12, x + 0.12, z + 0.18, z + 0.22, HC + 2.35, HC + 2.65, HEX.white);
+  }
+  const m = b.mesh(); group('signals', m); return m;
+})();
+{
+  const b = new Builder();
+  const light = (x, z, dx, dz) => {
+    b.prism(octa(x, z, 0.14), 0, HC + 7.5, HEX.navy2);
+    const lx = x + dx * 1.6, lz = z + dz * 1.6;
+    b.box(Math.min(x, lx) - 0.08, Math.max(x, lx) + 0.08, Math.min(z, lz) - 0.08, Math.max(z, lz) + 0.08, HC + 7.3, HC + 7.5, HEX.navy2);
+    b.box(lx - 0.35, lx + 0.35, lz - 0.2, lz + 0.2, HC + 7.05, HC + 7.3, HEX.lav);
+  };
+  for (const x of [-30, 22, 38, 60]) light(x, -14.6, 0, 1);
+  for (const x of [-24, 28, 42, 64]) light(x, 14.6, 0, -1);
+  for (const [x, z] of [[-9.6, -30], [9.6, -24], [-9.6, 24], [9.6, 30]]) light(x, z, x < 0 ? 1 : -1, 0);
+  group('lights', b.mesh());
+}
+
+// trees
+const trees = [];
+function treeProto(hex, s) { const b = new Builder(); b.prism(octa(0, 0, 0.28), 0, 2.4, HEX.trunk); b.geo(new THREE.IcosahedronGeometry(2.3 * s, 1), new THREE.Matrix4().makeTranslation(0, 3.7, 0).multiply(new THREE.Matrix4().makeScale(1, 0.92, 1)), hex, 0.66); return b.mesh(); }
+const TP = [treeProto(HEX.canopy, 1), treeProto(HEX.canopy2, 0.9)];
+const tree = (x, z, base = HC) => { const t = TP[trees.length % 2].clone(); t.position.set(x, base, z); scene.add(t); trees.push(t); };
+for (const x of [-34, -25, 26, 34, 56, 67]) tree(x, -16.4);
+for (const x of [-32, -20, 21, 33, 58, 68]) tree(x, 16.4);
+for (const [a, c] of [[17, MIDX[0] - 2], [MIDX[1] + 2, X1 - 1]]) for (let x = a + 2; x < c; x += 8) tree(x, -5.1);
+for (const [a, c] of [[X0 + 2, -15], [EB_PLAT[1] + 1, MIDX[0] - 1], [MIDX[1] + 2, X1 - 1]]) for (let x = a + 3; x < c; x += 8) tree(x, 5.1);
+for (const z of [-32, -24]) { tree(0, z); tree(0, -z); }
+for (const z of [-33, -24]) { tree(-10.5, z); tree(10.5, z + 3); tree(-10.5, -z - 3); tree(10.5, -z); }
+for (const [x, z] of [[-32, 24.5], [-26, 29.5], [-20, 24], [-17, 31], [-31, 31.5], [-23.5, 33]]) tree(x, z, HC + 0.2);
+
+// buildings
+const buildings = [];
+[
+  [-37, -28, -33.2, -19.2, 12], [-27, -20.5, -34.2, -19.2, 20], [-19.5, -13, -32.2, -19.2, 9],
+  [13, 24, -34.2, -19.2, 17], [25, 36, -35.2, -19.2, 11], [37, 44.5, -32.2, -19.2, 22],
+  [53, 62, -34.2, -19.2, 14], [63, 71, -35.2, -19.2, 19],
+  [16, 29, 25, 33, 5.5], [31, 43, 26, 33, 4.5], [54, 70, 25, 33, 6],
+].forEach(([x0, x1, zb, zf, h], i) => {
+  const b = new Builder(), c = HEX.bldg[i % HEX.bldg.length];
+  b.box(x0, x1, zb, zf, 0, h, c);
+  const win = new Builder();
+  for (let y = 1.6; y < h - 1.2; y += 3.2) {
+    for (let x = x0 + 1.0; x + 1.4 < x1 - 0.6; x += 2.6) { win.box(x, x + 1.4, zf, zf + 0.06, y, y + 1.5, HEX.navy2); win.box(x, x + 1.4, zb - 0.06, zb, y, y + 1.5, HEX.navy2); }
+    for (let z = zb + 1.0; z + 1.4 < zf - 0.6; z += 2.6) { win.box(x1, x1 + 0.06, z, z + 1.4, y, y + 1.5, HEX.navy2); win.box(x0 - 0.06, x0, z, z + 1.4, y, y + 1.5, HEX.navy2); }
+  }
+  const m = outline(b.mesh()); m.add(win.mesh()); m.position.y = HC; scene.add(m); buildings.push(m);
+});
+
+// people and vehicles
+const actors = [];
+function actor(b, x, z, y, rot = 0) { const m = b.mesh(); m.position.set(x, y, z); m.rotation.y = rot; scene.add(m); actors.push(m); }
+function bus() {
+  const b = new Builder(), L = 12, W = 2.55;
+  b.box(-L / 2, L / 2, -W / 2, W / 2, 0.45, 3.2, HEX.blueDk, HEX.blue);
+  b.box(-L / 2 + 0.2, L / 2 - 0.2, -W / 2 + 0.1, W / 2 - 0.1, 3.2, 3.45, HEX.blueDk);
+  for (const s of [-1, 1]) { b.box(-L / 2 + 0.6, L / 2 - 1.2, s * W / 2 - 0.02, s * W / 2 + 0.02, 1.7, 2.8, HEX.navy); b.box(-L / 2, L / 2, s * W / 2 - 0.02, s * W / 2 + 0.02, 1.05, 1.35, HEX.lav); }
+  b.box(L / 2 - 0.02, L / 2 + 0.02, -W / 2 + 0.2, W / 2 - 0.2, 1.5, 2.9, HEX.navy);
+  const wheel = new THREE.CylinderGeometry(0.55, 0.55, 0.3, 12).rotateX(Math.PI / 2);
+  for (const x of [-L / 2 + 2.2, L / 2 - 2.4]) for (const s of [-1, 1]) b.geo(wheel, new THREE.Matrix4().makeTranslation(x, 0.55, s * (W / 2 - 0.05)), HEX.navy, 0.8);
+  return b;
+}
+function car(hex) {
+  const b = new Builder();
+  b.box(-2.3, 2.3, -0.9, 0.9, 0.35, 1.1, hex); b.box(-1.2, 1.1, -0.8, 0.8, 1.1, 1.75, HEX.navy, HEX.navy2);
+  const wheel = new THREE.CylinderGeometry(0.36, 0.36, 0.2, 10).rotateX(Math.PI / 2);
+  for (const x of [-1.5, 1.5]) for (const s of [-1, 1]) b.geo(wheel, new THREE.Matrix4().makeTranslation(x, 0.36, s * 0.85), HEX.navy, 0.8);
+  return b;
+}
+function person(hex) { const b = new Builder(); b.geo(new THREE.CylinderGeometry(0.26, 0.3, 1.25, 8), new THREE.Matrix4().makeTranslation(0, 0.63, 0), hex, 0.7); b.geo(new THREE.IcosahedronGeometry(0.24, 1), new THREE.Matrix4().makeTranslation(0, 1.5, 0), HEX.skin, 0.75); return b; }
+function bike(hex) {
+  const b = new Builder(), wheel = new THREE.TorusGeometry(0.34, 0.06, 6, 14);
+  for (const x of [-0.55, 0.55]) b.geo(wheel, new THREE.Matrix4().makeTranslation(x, 0.36, 0), HEX.navy, 0.8);
+  b.box(-0.55, 0.55, -0.04, 0.04, 0.55, 0.62, HEX.navy2);
+  b.geo(new THREE.CylinderGeometry(0.22, 0.26, 0.8, 8), new THREE.Matrix4().makeTranslation(0, 1.1, 0), hex, 0.7);
+  b.geo(new THREE.IcosahedronGeometry(0.22, 1), new THREE.Matrix4().makeTranslation(0.05, 1.7, 0), HEX.skin, 0.75);
+  return b;
+}
+actor(bus(), -28, -2.2, 0, Math.PI); actor(bus(), 64, 2.2, 0, 0);
+actor(car(HEX.lav), 60, 8, 0, 0); actor(car(HEX.grey), 30, -8, 0, Math.PI); actor(car(HEX.greyDk), -30, 8, 0, 0);
+actor(car(HEX.lav), -3, 30, 0, -Math.PI / 2); actor(car(HEX.grey), 3, -28, 0, Math.PI / 2);
+actor(bike(HEX.blue), 22, -13, 0, Math.PI); actor(bike(HEX.lavDk), -20, 13, 0, 0); actor(bike(HEX.red), 8, 24, 0, Math.PI / 2); actor(bike(HEX.navy2), 58, 13, 0, 0);
+[[48.5, -9, HC, HEX.navy2], [48.2, 1.5, HC, HEX.lavDk], [49, 9, HC, HEX.blue], [-30, -5, HP, HEX.navy], [-25.5, -5.4, HP, HEX.blue], [-21, -4.8, HP, HEX.lavDk],
+ [26, 5, HP, HEX.navy2], [30.5, 5.3, HP, HEX.red], [14.2, -3, 0, HEX.blue], [14.3, 8.4, 0, HEX.navy], [-4, -16.3, 0, HEX.lavDk],
+ [24, -16, HC, HEX.navy], [-34, 16, HC, HEX.blue], [66, -15.8, HC, HEX.lavDk], [38, 15.9, HC, HEX.navy2], [10.3, -16.5, HC, HEX.red],
+ [-10.4, 15.2, HC, HEX.navy], [-24, 27, HC + 0.2, HEX.lavDk], [-28.5, 26.5, HC + 0.2, HEX.blue]].forEach(([x, z, y, c]) => actor(person(c), x, z, y));
+
+// ------------------------------------------------------------------ parts: meshes, markers, views
+const PART_MESHES = {
+  1: [bikePaint, G.buffers.children[0]], 2: [G.islands.children[0]], 3: [bars], 4: [G.medians.children[0]],
+  5: [busPaint], 6: [platforms, shelters], 7: [table, beacons], 8: [signals], 9: trees, 10: [laneSurface],
+};
+const ANCHORS = {
+  1: [24, HC + 0.9, -10.8], 2: [5.8, HC + 0.2, -10.8], 3: [14.2, 0.05, 7.5], 4: [0, HC + 0.2, -16.2], 5: [34, 0.05, -2.2],
+  6: [36.5, HP + 0.2, 5.1], 7: [48.5, HC + 0.2, 11], 8: [-5.8, HC + 6.1, 10.8], 9: [-32, 5.8, 16.4], 10: [66, 0.05, 8],
+};
+// camera views: [targetX, targetY, targetZ, azimuth deg, elevation deg, distance]
+const VIEWS = {
+  overview: [17, 2, 0, 28, 36, 185], plan: [17, 0, 0, 0, 89, 205],
+  1: [24, 1, -10, 22, 30, 58], 2: [3, 1, -6, 36, 44, 50], 3: [6, 0, -4, 28, 58, 70], 4: [2, 0, -10, 18, 46, 58],
+  5: [32, 0, -1, 24, 32, 62], 6: [28, 1, 3, 32, 30, 52], 7: [48.5, 1, 0, 40, 34, 58], 8: [0, 3, 2, 30, 26, 58],
+  9: [16, 4, 0, 26, 32, 110], 10: [58, 0, 6, 20, 30, 50],
+};
+
+const pickables = [];
+const overlays = {};
+const hlMat = new THREE.MeshBasicMaterial({ color: col(HEX.amber), transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -16 });
+for (const [id, list] of Object.entries(PART_MESHES)) {
+  overlays[id] = [];
+  for (const m of list) {
+    const o = new THREE.Mesh(m.geometry, hlMat); o.visible = false; o.raycast = () => {}; m.add(o); overlays[id].push(o);
+    m.userData.part = +id; pickables.push(m);
+  }
+}
+
+// ------------------------------------------------------------------ UI
+const partsEl = document.getElementById('parts'), detailEl = document.getElementById('detail'), markersEl = document.getElementById('markers');
+const partBtns = {}, markerBtns = {};
+for (const p of PARTS) {
+  const li = document.createElement('li');
+  li.innerHTML = `<button class="part" type="button" id="part-${p.n}" aria-pressed="false"><span class="n">${p.n}</span><span>${p.name}</span></button>`;
+  partsEl.appendChild(li);
+  partBtns[p.n] = li.firstElementChild;
+  partBtns[p.n].addEventListener('click', () => select(selected === p.n ? null : p.n));
+  const mk = document.createElement('button');
+  mk.className = 'marker'; mk.type = 'button'; mk.setAttribute('aria-label', `${p.n}. ${p.name}`);
+  mk.innerHTML = `<span class="num">${p.n}</span><span class="name">${p.name}</span>`;
+  mk.addEventListener('click', (e) => { e.stopPropagation(); select(p.n); });
+  markersEl.appendChild(mk); markerBtns[p.n] = mk;
+}
+
+function renderDetail() {
+  if (!selected) {
+    detailEl.innerHTML = `
+      <div class="head"><span class="badge overview">1–10</span><h2>What you are looking at</h2></div>
+      <p>A busy corridor crossing a neighborhood street, redesigned so that one person’s mistake does not cost someone their life. Buses run down the middle, bikes ride behind a curb, and every crossing is short, visible and slow.</p>
+      <p>The block has three pieces: a protected intersection on the left, a stretch of center-running bus lanes with boarding platforms, and a raised crossing in the middle of the block on the right.</p>
+      <h3>How to use it</h3>
+      <p>Pick a number on the model or in the list. The camera moves to that part and it lights up in amber.</p>
+      <div class="nav"><span></span><button class="navbtn" type="button" id="d-next">Start with 1 →</button></div>`;
+    detailEl.querySelector('#d-next').addEventListener('click', () => select(1));
+    return;
+  }
+  const p = PARTS[selected - 1];
+  detailEl.innerHTML = `
+    <div class="head"><span class="badge">${p.n}</span><h2>${p.name}</h2></div>
+    <h3>What it is</h3><p>${p.what}</p>
+    <h3>Why it helps</h3><p>${p.why}</p>
+    <h3>Look for it on your street</h3><p>${p.look}</p>
+    ${p.ep ? `<p class="more">${p.ep} <a href="${EPISODES}">Listen to the episode</a></p>` : ''}
+    <div class="nav">
+      <button class="navbtn" type="button" id="d-prev">${p.n > 1 ? '← ' + (p.n - 1) : '← Overview'}</button>
+      <button class="navbtn" type="button" id="d-next">${p.n < 10 ? (p.n + 1) + ' →' : 'Overview →'}</button>
+    </div>`;
+  detailEl.querySelector('#d-prev').addEventListener('click', () => select(p.n > 1 ? p.n - 1 : null));
+  detailEl.querySelector('#d-next').addEventListener('click', () => select(p.n < 10 ? p.n + 1 : null));
+}
+
+let selected = null;
+function select(n) {
+  selected = n;
+  for (const p of PARTS) {
+    const on = p.n === n;
+    partBtns[p.n].setAttribute('aria-pressed', on ? 'true' : 'false');
+    markerBtns[p.n].classList.toggle('on', on);
+    for (const o of overlays[p.n]) o.visible = on;
+  }
+  renderDetail();
+  flyTo(n ? VIEWS[n] : VIEWS.overview);
+  planBtn.setAttribute('aria-pressed', 'false');
+  idleSince = performance.now();
+}
+
+// ------------------------------------------------------------------ camera
+function viewToPos(v) {
+  const [tx, ty, tz, az, el, d0] = v, a = THREE.MathUtils.degToRad(az), e = THREE.MathUtils.degToRad(el);
+  const halfTan = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.aspect;
+  const d = d0 * Math.max(1, 0.348 / halfTan);
+  return { target: new THREE.Vector3(tx, ty, tz), pos: new THREE.Vector3(tx + d * Math.sin(a) * Math.cos(e), ty + d * Math.sin(e), tz + d * Math.cos(a) * Math.cos(e)) };
+}
+let fly = null;
+function flyTo(v, instant = false) {
+  if (!controls) return;
+  const to = viewToPos(v);
+  if (instant || reduceMotion) { camera.position.copy(to.pos); controls.target.copy(to.target); controls.update(); fly = null; return; }
+  const from = { target: controls.target.clone(), pos: camera.position.clone() };
+  const fs = new THREE.Spherical().setFromVector3(from.pos.clone().sub(from.target));
+  const ts = new THREE.Spherical().setFromVector3(to.pos.clone().sub(to.target));
+  let dTheta = ts.theta - fs.theta; if (dTheta > Math.PI) dTheta -= 2 * Math.PI; if (dTheta < -Math.PI) dTheta += 2 * Math.PI;
+  fly = { t0: performance.now(), dur: 1100, from, fs, ts, dTheta, to };
+}
+function stepFly(now) {
+  if (!fly) return;
+  const k = Math.min(1, (now - fly.t0) / fly.dur), e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+  const tgt = fly.from.target.clone().lerp(fly.to.target, e);
+  const s = new THREE.Spherical(
+    THREE.MathUtils.lerp(fly.fs.radius, fly.ts.radius, e),
+    THREE.MathUtils.lerp(fly.fs.phi, fly.ts.phi, e),
+    fly.fs.theta + fly.dTheta * e);
+  camera.position.copy(tgt).add(new THREE.Vector3().setFromSpherical(s));
+  controls.target.copy(tgt);
+  if (k >= 1) fly = null;
+}
+
+if (controls) {
+  controls.enableDamping = true; controls.dampingFactor = 0.08;
+  controls.minDistance = 22; controls.maxDistance = 280;
+  controls.maxPolarAngle = THREE.MathUtils.degToRad(82);
+  controls.screenSpacePanning = true;
+  controls.addEventListener('start', () => { fly = null; idleSince = performance.now(); controls.autoRotate = false; });
+}
+
+// ------------------------------------------------------------------ build animation
+const RISE = [ // [group or list, start, duration, kind]
+  ['sidewalks', 0.0, 0.8], ['buffers', 0.5, 0.7], ['islands', 0.9, 0.6], ['medians', 1.5, 0.6], ['strips', 1.8, 0.6],
+  ['platforms', 2.0, 0.7], ['shelters', 2.4, 0.6], ['table', 2.6, 0.6], ['beacons', 3.0, 0.5], ['signals', 3.0, 0.7], ['lights', 3.3, 0.7],
+];
+const clamp01 = (v) => Math.min(1, Math.max(0, v));
+const eback = (x) => { const c1 = 1.5, c3 = c1 + 1; return x <= 0 ? 0 : x >= 1 ? 1 : 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+const eout = (x) => 1 - Math.pow(1 - x, 3);
+let buildT0 = null, BUILD_END = 7.0;
+function applyBuild(t) {
+  for (const [name, t0, d] of RISE) { const s = eback(clamp01((t - t0) / d)); G[name].scale.y = Math.max(0.03, s); G[name].visible = s > 0.001 || ['sidewalks', 'buffers', 'islands', 'medians', 'strips', 'platforms', 'table'].includes(name); }
+  bars.material.opacity = clamp01((t - 1.2) / 0.6);
+  trees.forEach((tr) => { const t0 = 3.6 + (tr.position.x - X0) / (X1 - X0) * 1.1; const s = eback(clamp01((t - t0) / 0.5)); tr.visible = s > 0.001; tr.scale.setScalar(Math.max(0.001, s)); });
+  buildings.forEach((b, i) => { const s = eout(clamp01((t - 4.2 - i * 0.12) / 0.8)); b.visible = s > 0.001; b.scale.y = Math.max(0.001, s); });
+  actors.forEach((a, i) => { const s = eback(clamp01((t - 5.3 - i * 0.03) / 0.4)); a.visible = s > 0.001; a.scale.setScalar(Math.max(0.001, s)); });
+}
+function startBuild() {
+  if (reduceMotion) { applyBuild(99); buildT0 = null; return; }
+  buildT0 = performance.now(); applyBuild(0);
+}
+
+// ------------------------------------------------------------------ interaction
+const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+let down = null;
+canvas.addEventListener('pointerdown', (e) => { down = [e.clientX, e.clientY]; });
+canvas.addEventListener('pointerup', (e) => {
+  if (!down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 5) return;
+  const r = canvas.getBoundingClientRect();
+  ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+  ray.setFromCamera(ndc, camera);
+  const hit = ray.intersectObjects(pickables, false).find(h => h.object.userData.part);
+  if (hit) select(hit.object.userData.part);
+});
+
+const planBtn = document.getElementById('t-plan');
+document.getElementById('t-overview').addEventListener('click', () => select(null));
+planBtn.addEventListener('click', () => {
+  const on = planBtn.getAttribute('aria-pressed') !== 'true';
+  planBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  flyTo(on ? VIEWS.plan : (selected ? VIEWS[selected] : VIEWS.overview));
+});
+document.getElementById('t-build').addEventListener('click', () => { select(null); startBuild(); });
+const labelsBtn = document.getElementById('t-labels');
+labelsBtn.addEventListener('click', () => {
+  const on = labelsBtn.getAttribute('aria-pressed') !== 'true';
+  labelsBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  markersEl.classList.toggle('off', !on);
+});
+
+// ------------------------------------------------------------------ resize + loop
+function resize() {
+  if (!renderer) return;
+  const w = stage.clientWidth, h = stage.clientHeight;
+  renderer.setSize(w, h, false); camera.aspect = w / h;
+  // keep the whole block in frame on narrow screens
+  camera.fov = w / h < 1 ? 42 : 30;
+  camera.updateProjectionMatrix();
+}
+let lastAspect = 0;
+new ResizeObserver(() => { resize(); if (Math.abs(camera.aspect - lastAspect) > 0.05 && !fly) { lastAspect = camera.aspect; flyTo(selected ? VIEWS[selected] : VIEWS.overview, true); } }).observe(stage);
+resize(); lastAspect = camera.aspect; flyTo(VIEWS.overview, true);
+
+let idleSince = performance.now();
+const v = new THREE.Vector3();
+function loop(now) {
+  requestAnimationFrame(loop);
+  if (!renderer) return;
+  if (buildT0 !== null) { const t = (now - buildT0) / 1000; applyBuild(t); if (t > BUILD_END) buildT0 = null; }
+  stepFly(now);
+  if (controls) {
+    controls.autoRotate = !reduceMotion && !fly && !selected && planBtn.getAttribute('aria-pressed') !== 'true' && now - idleSince > 9000;
+    controls.autoRotateSpeed = 0.35;
+    controls.update();
+  }
+  // highlight pulse
+  hlMat.opacity = selected ? 0.38 + 0.2 * Math.sin(now / 320) : 0;
+  // markers
+  const w = stage.clientWidth, h = stage.clientHeight;
+  const buildT = buildT0 === null ? 99 : (now - buildT0) / 1000;
+  for (const p of PARTS) {
+    v.set(...ANCHORS[p.n]).project(camera);
+    const x = (v.x + 1) / 2 * w, y = (1 - v.y) / 2 * h;
+    const vis = v.z < 1 && x > -20 && x < w + 20 && y > -20 && y < h + 20 && buildT > 0.8 + p.n * 0.45;
+    const el = markerBtns[p.n];
+    el.style.visibility = vis ? 'visible' : 'hidden';
+    if (vis) el.style.transform = `translate(${x - 15}px, ${y - 15}px)`;
+  }
+  renderer.render(scene, camera);
+}
+renderDetail();
+startBuild();
+requestAnimationFrame(loop);
+</script>
+
+</body>
+</html>

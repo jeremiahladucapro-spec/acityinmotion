@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Redesign Your Street — A City in Motion</title>
+<meta name="description" content="Build a street curb to curb in 3D, see how safe it is, then walk or drive down it. Save a picture or share a link to your design.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{
+  --cream:#F5F1E8; --card:#FFFFFF; --navy:#2B3550; --navy-2:#3A4568; --lavender:#B8A6D9;
+  --lavender-dark:#5F4E86; --lavender-light:#EEE8F6; --ink:#262A3D; --slate:#6B7280; --line:#E3DDCF;
+  --amber:#DFA741; --good:#2F6D5C; --bad:#A33F3F;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+[hidden]{display:none!important;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+button{font:inherit;color:inherit;}
+.wrap{max-width:1320px;margin:0 auto;padding:0 clamp(16px,3vw,32px);}
+
+/* header (matches the rest of the site) */
+header.site{background:rgba(245,241,232,0.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:18px 0;position:sticky;top:0;z-index:50;border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;}
+.brand{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:21px;color:var(--navy);display:flex;align-items:baseline;gap:8px;}
+.brand .tag{font-family:'IBM Plex Mono',monospace;font-style:normal;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--lavender-dark);background:var(--lavender-light);padding:3px 8px;border-radius:10px;}
+nav.links{display:flex;gap:30px;font-size:14px;}
+nav.links a{color:var(--slate);font-weight:500;transition:.15s;}
+nav.links a:hover{color:var(--navy);}
+.nav-cta{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--cream);background:var(--navy);padding:10px 18px;border-radius:20px;white-space:nowrap;}
+@media (max-width:900px){nav.links{display:none;}}
+
+/* intro */
+.intro{padding:36px 0 22px;display:grid;gap:10px;max-width:760px;}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--lavender-dark);}
+h1{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:clamp(30px,4.2vw,48px);line-height:1.06;letter-spacing:-.01em;text-wrap:balance;}
+.lede{font-size:16.5px;color:var(--slate);max-width:64ch;}
+
+/* layout */
+.builder{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:20px;align-items:start;padding-bottom:40px;}
+.col{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;min-width:0;}
+.col>*,.builder>*{min-width:0;}
+@media (max-width:980px){
+  .builder{grid-template-columns:minmax(0,1fr);}
+  .col{display:contents;}
+  .o-stage{order:1}.o-strip{order:2}.o-selected{order:3}.o-palette{order:4}.o-corridor{order:5}.o-score{order:6}
+}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;}
+.label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--lavender-dark);margin-bottom:10px;display:flex;justify-content:space-between;gap:10px;align-items:baseline;}
+.label .step{color:var(--slate);}
+
+/* stage */
+.stage{position:relative;background:var(--navy);border-radius:16px;overflow:hidden;height:min(66vh,620px);min-height:360px;touch-action:none;}
+@media (max-width:980px){.stage{height:56vh;min-height:320px;}}
+.stage canvas{display:block;width:100%;height:100%;cursor:grab;}
+.stage canvas:active{cursor:grabbing;}
+.views{position:absolute;left:10px;top:10px;right:10px;display:flex;flex-wrap:wrap;gap:6px;pointer-events:none;}
+.views button{pointer-events:auto;}
+.vbtn{font-weight:600;font-size:13px;line-height:1;color:#F5F1E8;background:rgba(38,42,61,.74);border:1px solid rgba(184,166,217,.45);border-radius:999px;padding:10px 13px;cursor:pointer;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);}
+.vbtn:hover{background:rgba(95,78,134,.92);}
+.vbtn[aria-pressed="true"]{background:#F5F1E8;color:#262A3D;border-color:#F5F1E8;}
+.vbtn:disabled{opacity:.45;cursor:not-allowed;}
+.vbtn:focus-visible,.pbtn:focus-visible,.tile:focus-visible,.abtn:focus-visible,.cbtn:focus-visible{outline:2px solid var(--amber);outline-offset:2px;}
+.hint{transition:opacity .4s;position:absolute;left:12px;bottom:12px;right:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.04em;color:rgba(245,241,232,.82);pointer-events:none;text-shadow:0 1px 2px rgba(0,0,0,.4);}
+.empty-msg{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;color:#F5F1E8;pointer-events:none;}
+.empty-msg p{max-width:30ch;font-size:15px;background:rgba(38,42,61,.7);padding:14px 18px;border-radius:12px;}
+.toast{position:absolute;left:50%;top:58px;transform:translateX(-50%);background:#F5F1E8;color:var(--ink);font-size:13.5px;font-weight:600;padding:9px 14px;border-radius:999px;box-shadow:0 6px 18px rgba(0,0,0,.25);opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap;}
+.toast.on{opacity:1;}
+.webgl-fail{position:absolute;inset:0;display:grid;place-items:center;color:#F5F1E8;padding:24px;text-align:center;}
+
+/* strip */
+.meter-row{display:flex;justify-content:space-between;gap:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--slate);margin-bottom:8px;}
+.meter-row .over{color:var(--bad);}
+.meter{height:8px;background:var(--cream);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-bottom:12px;}
+.meter i{display:block;height:100%;width:0;background:var(--lavender);transition:width .25s;}
+.meter i.over{background:#C4676A;}
+.strip{display:flex;gap:3px;overflow-x:auto;padding:3px 3px 8px;scrollbar-width:thin;}
+.tile{flex:var(--ft) 0 0;min-width:48px;min-height:64px;border:0;border-radius:8px;cursor:pointer;display:flex;flex-direction:column;justify-content:flex-end;align-items:stretch;padding:0;overflow:hidden;position:relative;text-align:center;}
+.tile .tn{display:block;font-size:10.5px;font-weight:600;line-height:1.15;color:#F5F1E8;background:rgba(38,42,61,.78);padding:4px 3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tile .tf{position:absolute;top:5px;left:0;right:0;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#262A3D;}
+.tile .td{position:absolute;top:21px;left:0;right:0;font-size:14px;color:#262A3D;opacity:.8;}
+.tile[aria-pressed="true"]{box-shadow:0 0 0 3px var(--amber) inset;}
+.strip-empty{flex:1;padding:18px;text-align:center;color:var(--slate);font-size:14px;border:1px dashed var(--line);border-radius:10px;}
+.strip-note{font-size:12.5px;color:var(--slate);margin-top:4px;}
+
+/* palette */
+.pgroup{margin-bottom:12px;}
+.pgroup:last-child{margin-bottom:0;}
+.pgroup h3{font-size:12.5px;font-weight:600;color:var(--slate);margin-bottom:6px;}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.pbtn{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--cream);cursor:pointer;text-align:left;font-size:13px;font-weight:500;line-height:1.2;}
+.pbtn:hover{border-color:var(--lavender);}
+.pbtn .sw{flex:none;width:14px;height:14px;border-radius:4px;}
+.pbtn .ft{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--slate);}
+.pnote{font-size:12.5px;color:var(--slate);margin-bottom:10px;}
+
+/* corridor */
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.cbtn{min-height:44px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--cream);cursor:pointer;font-size:13px;font-weight:500;text-align:left;line-height:1.2;}
+.cbtn small{display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--slate);margin-top:2px;}
+.cbtn[aria-pressed="true"]{background:var(--navy);color:#F5F1E8;border-color:var(--navy);}
+.cbtn[aria-pressed="true"] small{color:var(--lavender);}
+.cnote{font-size:13px;color:var(--slate);font-style:italic;margin-top:10px;}
+.row-btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
+
+/* selected */
+.sel-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.sel-head .sw{width:16px;height:16px;border-radius:4px;flex:none;}
+.sel-head h2{font-family:'Playfair Display',serif;font-weight:700;font-size:22px;line-height:1.15;}
+.sel-desc{font-size:13.5px;color:var(--slate);margin-bottom:12px;}
+.width-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.width-row .wval{font-family:'Playfair Display',serif;font-weight:700;font-size:26px;min-width:64px;text-align:center;}
+.width-row .wrange{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--slate);}
+.abtn{min-height:44px;min-width:44px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--cream);cursor:pointer;font-size:13.5px;font-weight:600;}
+.abtn:hover:not(:disabled){border-color:var(--navy);}
+.abtn:disabled{opacity:.4;cursor:not-allowed;}
+.abtn.round{padding:0;width:44px;font-size:20px;line-height:1;}
+.abtn.dark{background:var(--navy);color:#F5F1E8;border-color:var(--navy);}
+.abtn.danger{color:var(--bad);}
+.act-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.sel-empty{font-size:14px;color:var(--slate);}
+
+/* score */
+.score-top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px;}
+.score-num{font-family:'Playfair Display',serif;font-weight:700;font-size:44px;line-height:1;}
+.score-of{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--slate);}
+.score-tag{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;padding:5px 10px;border-radius:10px;}
+.notes{display:grid;gap:8px;list-style:none;}
+.note{display:flex;gap:10px;font-size:14px;line-height:1.5;}
+.note .ic{flex:none;width:20px;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:13px;}
+.note.good .ic{color:var(--good);} .note.bad .ic{color:#C4676A;} .note.tip .ic{color:var(--lavender-dark);}
+.share-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);}
+.fine{font-size:12.5px;color:var(--slate);margin-top:10px;}
+
+footer.site{border-top:1px solid var(--line);padding:26px 0 40px;font-size:13.5px;color:var(--slate);}
+footer.site .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;}
+footer.site a{color:var(--lavender-dark);font-weight:600;}
+</style>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-1AO4dRE5cw9bBvKAG6_i9.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="brand">A City <span class="tag">in motion</span></a>
+    <nav class="links">
+      <a href="index.html">Home</a>
+      <a href="episodes.html">Episodes</a>
+      <a href="visionzero.html">Vision Zero</a>
+      <a href="yourstreet.html">Your Street</a>
+      <a href="getinvolved.html">Get Involved</a>
+      <a href="blog.html">Blog</a>
+    </nav>
+    <a href="index.html#subscribe" class="nav-cta">Subscribe</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <header class="intro">
+    <p class="eyebrow">Redesign your street</p>
+    <h1>Build a street, then walk down it</h1>
+    <p class="lede">Every street has a fixed amount of space, and every project decides who gets it. Pick a corridor, add pieces curb to curb, and watch the street take shape in 3D. Then step onto the sidewalk or into the driver's seat to see what your choices feel like.</p>
+  </header>
+
+  <section class="builder" aria-label="Street builder">
+    <div class="col">
+      <div class="o-stage">
+        <div class="stage" id="stage">
+          <canvas id="c" tabindex="-1" aria-label="3D view of your street. Use the strip below the view to select and change each piece."></canvas>
+          <div class="views" role="toolbar" aria-label="Camera views">
+            <button class="vbtn" type="button" data-view="orbit" aria-pressed="true">3D</button>
+            <button class="vbtn" type="button" data-view="section" aria-pressed="false">Cross-section</button>
+            <button class="vbtn" type="button" data-view="walk" aria-pressed="false">Walk it</button>
+            <button class="vbtn" type="button" data-view="drive" aria-pressed="false">Drive it</button>
+          </div>
+          <div class="empty-msg" id="empty-msg" hidden><p>This right-of-way is empty. Add a sidewalk to start, or load an example.</p></div>
+          <p class="hint" id="hint">Drag to turn · pinch or scroll to zoom · tap any piece to change it</p>
+          <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <div class="card o-strip">
+        <div class="meter-row"><span id="corr-label">Downtown main street</span><span id="ft-readout">0 / 60 ft</span></div>
+        <div class="meter"><i id="meter-fill"></i></div>
+        <div class="strip" id="strip" role="group" aria-label="Your street, left to right"></div>
+        <p class="strip-note">Left to right, as if you were standing at the end of the street looking down it. Tap a piece to change it.</p>
+      </div>
+
+      <div class="card o-score" aria-live="polite">
+        <div class="label"><span>How safe is it?</span></div>
+        <div id="score"></div>
+        <div class="share-row">
+          <button class="abtn dark" type="button" id="btn-save">Save as image</button>
+          <button class="abtn" type="button" id="btn-share">Share a link</button>
+        </div>
+        <p class="fine">The score is a teaching tool, not an engineering review. It rewards the basics that keep people alive: room to walk, separation for bikes, fewer and narrower lanes, and slower speeds.</p>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card o-corridor">
+        <div class="label"><span>Corridor type</span><span class="step">Step 1</span></div>
+        <div class="cgrid" id="corridors"></div>
+        <p class="cnote" id="corr-note"></p>
+        <div class="row-btns">
+          <button class="abtn" type="button" id="btn-example">Load an example</button>
+          <button class="abtn danger" type="button" id="btn-clear">Start over</button>
+        </div>
+      </div>
+
+      <div class="card o-selected" id="selected" aria-live="polite"></div>
+
+      <div class="card o-palette">
+        <div class="label"><span>Add a piece</span><span class="step">Step 2</span></div>
+        <p class="pnote" id="pnote">Tap to add it to the right-hand edge of the street.</p>
+        <div id="palette"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p>Built by A City in Motion. Street elements follow patterns from NACTO's <a href="https://nacto.org/publication/urban-street-design-guide/">Urban Street Design Guide</a>.</p>
+    <p><a href="getinvolved.html">Want to change your real street? Here is how →</a></p>
+  </div>
+</footer>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+<script type="module" src="street-builder.js"></script>
+</body>
+</html>

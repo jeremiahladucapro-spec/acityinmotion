@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Involved — A City in Motion</title>
+<meta name="description" content="A podcast and content hub on transportation planning, Vision Zero, and the people building safer, more connected cities.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&amp;family=Inter:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap">
+<style>
+:root{
+  --cream:#F5F1E8;
+  --card:#FFFFFF;
+  --navy:#2B3550;
+  --navy-2:#3A4568;
+  --blue:#55688F;
+  --lavender:#B8A6D9;
+  --lavender-dark:#5F4E86;
+  --lavender-light:#EEE8F6;
+  --ink:#262A3D;
+  --slate:#6B7280;
+  --line:#E3DDCF;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--cream);
+  color:var(--ink);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none;}
+img,svg{max-width:100%;display:block;}
+.wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+
+/* ---- Header / nav ---- */
+header.site{
+  background:rgba(245,241,232,0.85);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  padding:18px 0;
+  position:sticky;top:0;z-index:50;
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;}
+.brand{
+  font-family:'Playfair Display',serif;font-style:italic;font-weight:700;
+  font-size:21px;color:var(--navy);display:flex;align-items:baseline;gap:8px;
+}
+.brand .tag{
+  font-family:'IBM Plex Mono',monospace;font-style:normal;font-size:9.5px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--lavender-dark);
+  background:var(--lavender-light);padding:3px 8px;border-radius:10px;
+}
+nav.links{display:flex;gap:30px;font-size:14px;}
+nav.links a{color:var(--slate);transition:.15s;font-weight:500;}
+nav.links a:hover,nav.links a.active{color:var(--navy);}
+.nav-cta{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;
+  letter-spacing:.05em;color:var(--cream);background:var(--navy);
+  padding:10px 18px;border-radius:20px;white-space:nowrap;transition:.15s;
+}
+.nav-cta:hover{background:var(--navy-2);}
+
+/* ---- Hero ---- */
+.hero{padding:72px 0 88px;}
+.hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:56px;align-items:center;}
+.hero-eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--lavender-dark);margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;
+}
+.hero-eyebrow::before{content:'';width:20px;height:1px;background:var(--lavender-dark);}
+.hero h1{
+  font-family:'Playfair Display',serif;font-style:italic;font-weight:700;
+  font-size:58px;line-height:1.04;margin-bottom:20px;letter-spacing:-.01em;
+}
+.hero p{font-size:17px;color:var(--slate);max-width:460px;margin-bottom:32px;}
+.btn-row{display:flex;gap:14px;flex-wrap:wrap;}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;padding:13px 24px;
+  border-radius:26px;transition:.18s;
+}
+.btn-primary{background:var(--navy);color:var(--cream);}
+.btn-primary:hover{background:var(--navy-2);transform:translateY(-1px);}
+.btn-secondary{background:transparent;color:var(--navy);border:1.5px solid var(--navy);}
+.btn-secondary:hover{background:var(--navy);color:var(--cream);}
+
+/* ---- Hero artwork (recreation of carousel cover) ---- */
+.hero-art{
+  background:var(--navy);border-radius:22px;padding:44px 36px;position:relative;
+  overflow:hidden;aspect-ratio:1/1.05;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+}
+.hero-art::before{
+  content:'';position:absolute;top:-60px;right:-60px;width:180px;height:180px;
+  border-radius:50%;background:rgba(184,166,217,0.12);
+}
+.hero-art-word{
+  font-family:'Playfair Display',serif;font-style:italic;font-weight:700;
+  font-size:44px;color:var(--cream);text-align:center;line-height:1;position:relative;z-index:2;
+}
+.hero-art-badge{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--navy);background:var(--lavender);
+  padding:4px 10px;border-radius:10px;display:inline-block;margin-top:10px;position:relative;z-index:2;
+}
+.hero-art-train{width:88%;margin-top:36px;position:relative;z-index:2;}
+.hero-art-by{
+  font-family:'Playfair Display',serif;font-style:italic;font-size:13px;
+  color:#C7C4D6;margin-top:22px;position:relative;z-index:2;
+}
+
+/* ---- Section headings ---- */
+.section{padding:56px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:28px;flex-wrap:wrap;gap:8px;}
+.section-title{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:30px;}
+.section-link{font-family:'IBM Plex Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--lavender-dark);}
+.section-link:hover{text-decoration:underline;}
+.section-sub{font-size:14.5px;line-height:1.65;color:var(--slate);margin:8px 0 22px;}
+
+/* ---- Listen-on band ---- */
+.listen-band{
+  background:var(--card);border:1px solid var(--line);border-radius:18px;
+  padding:28px 32px;display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:20px;
+}
+.listen-label{font-weight:600;font-size:15px;}
+.listen-label span{display:block;font-size:12.5px;color:var(--slate);font-weight:400;margin-top:2px;}
+.listen-links{display:flex;gap:10px;flex-wrap:wrap;}
+.listen-link{
+  display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;
+  padding:10px 18px;border-radius:20px;border:1px solid var(--line);
+  background:var(--cream);transition:.15s;
+}
+.listen-link:hover{border-color:var(--navy);background:var(--navy);color:var(--cream);}
+.listen-link svg{width:16px;height:16px;}
+
+/* ---- Cards ---- */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  overflow:hidden;transition:.2s;display:flex;flex-direction:column;
+}
+.card:hover{border-color:var(--lavender);transform:translateY(-3px);box-shadow:0 12px 28px rgba(43,53,80,0.08);}
+.card-media{
+  aspect-ratio:16/9;background:linear-gradient(135deg,var(--navy),var(--navy-2));display:flex;align-items:center;
+  justify-content:center;color:var(--lavender);font-family:'IBM Plex Mono',monospace;
+  font-size:11px;text-transform:uppercase;letter-spacing:.05em;
+}
+.card-body{padding:20px 22px;flex:1;display:flex;flex-direction:column;}
+.card-tag{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;
+  letter-spacing:.05em;color:var(--lavender-dark);background:var(--lavender-light);
+  padding:3px 8px;border-radius:10px;display:inline-block;margin-bottom:10px;
+  width:fit-content;
+}
+.card-title{font-weight:600;font-size:16.5px;margin-bottom:8px;line-height:1.35;}
+.card-desc{font-size:13.5px;color:var(--slate);flex:1;}
+.card-meta{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate);
+  margin-top:14px;padding-top:14px;border-top:1px solid var(--line);
+}
+
+/* ---- Guest strip ---- */
+.guest-strip{display:flex;gap:16px;overflow-x:auto;padding-bottom:8px;}
+.guest-chip{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:16px 20px;min-width:210px;flex-shrink:0;transition:.15s;
+}
+.guest-chip:hover{border-color:var(--lavender);}
+.guest-chip .name{font-weight:600;font-size:14.5px;margin-bottom:2px;}
+.guest-chip .role{font-size:12.5px;color:var(--slate);}
+.guest-chip .status{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;
+  color:var(--lavender-dark);margin-top:10px;
+}
+
+/* ---- Newsletter band ---- */
+.newsletter{background:var(--navy);color:var(--cream);padding:56px 0;margin-top:24px;border-radius:26px 26px 0 0;}
+.newsletter .wrap{display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;}
+.newsletter h3{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:26px;margin-bottom:6px;}
+.newsletter p{color:#C7C4D6;font-size:14px;max-width:380px;}
+.newsletter form{display:flex;gap:10px;flex-wrap:wrap;}
+.newsletter input[type=email]{
+  padding:13px 18px;border-radius:24px;border:1px solid #545E80;
+  background:rgba(255,255,255,0.06);color:var(--cream);font-size:14px;min-width:240px;
+}
+.newsletter input[type=email]::placeholder{color:#9490A8;}
+.newsletter button{
+  font-family:'Inter',sans-serif;font-weight:600;font-size:14px;
+  background:var(--lavender);color:var(--navy);border:none;
+  padding:13px 24px;border-radius:24px;cursor:pointer;transition:.15s;
+}
+.newsletter button:hover{background:#C9BAE3;}
+
+/* ---- Ideas / questions box ---- */
+.ideas{padding:56px 0 8px;}
+.ideas-box{
+  background:var(--card);border:1px solid var(--line);border-radius:20px;
+  padding:36px 40px;display:grid;grid-template-columns:0.85fr 1.15fr;gap:40px;align-items:start;
+}
+.ideas-intro .label{
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--lavender-dark);margin-bottom:10px;
+}
+.ideas-intro h3{
+  font-family:'Playfair Display',serif;font-style:italic;font-weight:700;
+  font-size:26px;line-height:1.15;margin-bottom:10px;
+}
+.ideas-intro p{font-size:14px;color:var(--slate);}
+.ideas-form{display:flex;flex-direction:column;gap:14px;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.ideas-form label{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--slate);margin-bottom:6px;display:block;
+}
+.ideas-form input,.ideas-form select,.ideas-form textarea{
+  width:100%;font-family:'Inter',sans-serif;font-size:14px;color:var(--ink);
+  background:var(--cream);border:1px solid var(--line);border-radius:12px;
+  padding:12px 15px;transition:.15s;
+}
+.ideas-form textarea{resize:vertical;min-height:118px;line-height:1.5;}
+.ideas-form input:focus,.ideas-form select:focus,.ideas-form textarea:focus{
+  outline:none;border-color:var(--lavender);box-shadow:0 0 0 3px var(--lavender-light);
+}
+.ideas-form input::placeholder,.ideas-form textarea::placeholder{color:#A5A29B;}
+.ideas-submit{
+  font-family:'Inter',sans-serif;font-weight:600;font-size:14px;
+  background:var(--navy);color:var(--cream);border:none;
+  padding:14px 28px;border-radius:26px;cursor:pointer;transition:.18s;
+  align-self:flex-start;
+}
+.ideas-submit:hover{background:var(--navy-2);transform:translateY(-1px);}
+.ideas-note{font-size:12px;color:var(--slate);margin-top:2px;}
+
+/* ---- Contact section ---- */
+.contact{padding:60px 0 20px;}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.contact-card{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 28px;
+}
+.contact-card .label{
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--lavender-dark);margin-bottom:10px;
+}
+.contact-card .value{font-size:16px;font-weight:600;}
+.contact-card .value a:hover{color:var(--lavender-dark);}
+.social-row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;}
+.social-btn{
+  display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;
+  padding:9px 16px;border-radius:20px;border:1px solid var(--line);transition:.15s;
+}
+.social-btn:hover{border-color:var(--navy);background:var(--navy);color:var(--cream);}
+.social-btn svg{width:15px;height:15px;}
+
+/* ---- Footer ---- */
+footer.site{padding:40px 0;}
+footer.site .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+footer .brand-mini{
+  font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:16px;color:var(--navy);
+}
+footer .foot-links{display:flex;gap:20px;font-size:13px;color:var(--slate);}
+footer .foot-links a:hover{color:var(--navy);}
+
+/* ---- Page header (non-home pages) ---- */
+.page-head{padding:56px 0 36px;}
+.page-head h1{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:42px;margin-bottom:12px;}
+.page-head p{color:var(--slate);font-size:15px;max-width:560px;}
+
+/* ---- Filter pills ---- */
+.pills{display:flex;gap:8px;margin-bottom:30px;flex-wrap:wrap;}
+.pill{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;text-transform:uppercase;
+  letter-spacing:.05em;padding:9px 17px;border-radius:20px;border:1px solid var(--line);
+  background:var(--card);color:var(--slate);cursor:pointer;transition:.15s;
+}
+.pill.active,.pill:hover{background:var(--navy);color:var(--lavender);border-color:var(--navy);}
+
+/* ---- News list ---- */
+.news-item{display:flex;gap:20px;padding:24px 0;border-top:1px solid var(--line);}
+.news-item:last-child{border-bottom:1px solid var(--line);}
+.news-date{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--lavender-dark);
+  min-width:90px;flex-shrink:0;padding-top:2px;
+}
+.news-title{font-weight:600;font-size:16.5px;margin-bottom:4px;}
+.news-desc{font-size:13.5px;color:var(--slate);}
+
+/* ---- Responsive ---- */
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;}
+  .hero-art{max-width:380px;margin:0 auto;}
+  .grid{grid-template-columns:repeat(2,1fr);}
+  nav.links{display:none;}
+  .hero h1{font-size:40px;}
+  .contact-grid{grid-template-columns:1fr;}
+  .ideas-box{grid-template-columns:1fr;gap:28px;padding:30px 26px;}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr;}
+  .field-row{grid-template-columns:1fr;}
+  .ideas-submit{width:100%;text-align:center;}
+  .newsletter .wrap{flex-direction:column;align-items:flex-start;}
+  .listen-band{flex-direction:column;align-items:flex-start;}
+  .hero h1{font-size:32px;}
+}
+
+/* ---- Street lab (Streetmix-style) ---- */
+.game{padding:56px 0 20px;}
+.game-shell{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:32px 36px;}
+.game-head .label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--lavender-dark);margin-bottom:8px;}
+.game-head h3{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:28px;margin-bottom:8px;}
+.game-head p{font-size:14px;color:var(--slate);max-width:640px;margin-bottom:22px;}
+
+.corridor-row{margin-bottom:18px;}
+.corridor-label,.palette-label{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--slate);margin-bottom:9px;}
+.corridor-picker{display:flex;gap:8px;flex-wrap:wrap;}
+.corr-btn{font-family:'Inter',sans-serif;font-size:13px;font-weight:500;padding:9px 16px;border-radius:20px;border:1px solid var(--line);background:var(--cream);color:var(--slate);cursor:pointer;transition:.15s;}
+.corr-btn:hover{border-color:var(--lavender);}
+.corr-btn.active{background:var(--navy);color:var(--lavender);border-color:var(--navy);}
+
+.game-meta{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--line);}
+.meter{flex:1;min-width:220px;}
+.meter-top{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;}
+.meter-bar{height:8px;background:var(--cream);border-radius:6px;overflow:hidden;border:1px solid var(--line);}
+.meter-fill{height:100%;background:var(--lavender);width:0%;transition:width .25s ease;}
+.meter-fill.over{background:#C4676A;}
+.game-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding:9px 16px;border-radius:20px;cursor:pointer;border:1px solid var(--line);background:var(--cream);color:var(--slate);transition:.15s;}
+.game-btn:hover{border-color:var(--navy);color:var(--navy);}
+
+.palette{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;}
+.piece{display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:12px;border:1px solid var(--line);background:var(--cream);cursor:grab;font-size:13px;font-weight:500;transition:.15s;user-select:none;}
+.piece:hover{border-color:var(--lavender);transform:translateY(-2px);}
+.piece:active{cursor:grabbing;}
+.piece .sw{width:14px;height:14px;border-radius:4px;flex-shrink:0;}
+.piece .ft{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--slate);}
+
+/* scene */
+.street-scene{position:relative;border-radius:14px;overflow:hidden;background:linear-gradient(#BBD8EC 0%,#D6E8F4 70%,#E4F0F8 100%);padding:74px 0 0;}
+.bldg{position:absolute;bottom:0;width:74px;z-index:1;pointer-events:none;}
+.bldg-l{left:0;height:150px;background:
+  linear-gradient(#2B3550,#2B3550);
+}
+.bldg-l::after,.bldg-r::after{content:'';position:absolute;inset:12px 12px auto 12px;height:78px;
+  background:repeating-linear-gradient(#BBD8EC 0 16px,transparent 16px 30px);opacity:.85;}
+.bldg-r{right:0;height:126px;background:#F5F1E8;border-left:3px solid #DED7C6;}
+.bldg-r::before{content:'';position:absolute;bottom:0;left:0;right:0;height:26px;background:#4E8B4A;}
+@media (max-width:760px){.bldg{display:none;}.street-scene{padding-top:48px;}}
+
+.street{display:flex;min-height:120px;position:relative;z-index:2;margin:0 74px;background:#E4F0F8;transition:.15s;}
+.street.drag-over{outline:3px dashed var(--lavender);outline-offset:-3px;}
+.street-empty{flex:1;display:flex;align-items:center;justify-content:center;font-size:13.5px;color:var(--slate);padding:34px 20px;text-align:center;background:var(--cream);}
+@media (max-width:760px){.street{margin:0;}}
+
+.slice{position:relative;min-width:0;cursor:grab;transition:.12s;border-right:1px solid rgba(255,255,255,.3);overflow:hidden;padding-bottom:34px;}
+.slice:last-child{border-right:none;}
+.slice:hover{filter:brightness(1.06);}
+.slice.dragging{opacity:.45;}
+.slice-art{display:block;width:100%;height:96px;}
+.slice-bar{position:absolute;bottom:16px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:4px;opacity:0;transition:.15s;}
+.slice:hover .slice-bar{opacity:1;}
+.w-btn{width:17px;height:17px;border-radius:50%;border:none;background:rgba(255,255,255,.92);color:#2B3550;font-size:12px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;}
+.w-btn:hover{background:#fff;}
+.slice-ft{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#fff;background:rgba(43,53,80,.62);padding:2px 6px;border-radius:8px;}
+.slice-name{position:absolute;bottom:0;left:0;right:0;font-size:9.5px;font-weight:600;text-align:center;padding:4px 2px;background:rgba(43,53,80,.82);color:#F5F1E8;line-height:1.15;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.slice-x{position:absolute;top:5px;right:5px;font-size:11px;opacity:0;transition:.15s;background:rgba(255,255,255,.92);color:#333;border-radius:50%;width:17px;height:17px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3;}
+.slice:hover .slice-x{opacity:1;}
+
+.verdict{margin-top:22px;padding-top:20px;border-top:1px solid var(--line);}
+.verdict-score{display:flex;align-items:baseline;gap:10px;margin-bottom:8px;}
+.verdict-num{font-family:'Playfair Display',serif;font-weight:700;font-size:38px;line-height:1;}
+.verdict-outof{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--slate);}
+.verdict-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.05em;padding:4px 10px;border-radius:10px;margin-left:auto;}
+.corr-note{font-size:13px;color:var(--slate);font-style:italic;margin-bottom:14px;padding-bottom:12px;border-bottom:1px dashed var(--line);}
+.notes{display:flex;flex-direction:column;gap:7px;}
+.note{display:flex;gap:9px;font-size:13.5px;line-height:1.45;align-items:flex-start;}
+.note-icon{flex-shrink:0;font-weight:700;font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:1px;}
+.note.good .note-icon{color:#2F6D5C;}
+.note.bad .note-icon{color:#C4676A;}
+.note.tip .note-icon{color:var(--lavender-dark);}
+@media (max-width:640px){.game-shell{padding:24px 18px;}.slice-name{font-size:8px;}.slice-art{height:76px;}}
+
+/* ---- Episode platform chooser ---- */
+.ep-listen{display:flex;gap:6px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);flex-wrap:wrap;}
+.ep-plat{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.05em;padding:6px 11px;border-radius:14px;border:1px solid var(--line);color:var(--slate);transition:.15s;}
+.ep-plat:hover{transform:translateY(-1px);}
+.ep-plat.ap:hover{border-color:#9B5DE5;color:#7B3FC4;}
+.ep-plat.sp:hover{border-color:#2F6D5C;color:#2F6D5C;}
+.ep-plat.yt:hover{border-color:#C1443C;color:#C1443C;}
+
+/* ---- Featured blog post ---- */
+.featured-post{grid-column:1 / -1;border-color:var(--lavender);}
+.featured-post .card-media{aspect-ratio:auto;height:96px;background:linear-gradient(120deg,var(--navy),var(--navy-2));}
+.featured-post .card-title{font-family:'Playfair Display',serif;font-style:italic;font-size:24px;line-height:1.2;}
+.featured-post .card-desc{font-size:15px;max-width:640px;}
+@media (max-width:560px){.featured-post .card-title{font-size:19px;}}
+
+/* ---- Street lab: lane markings ---- */
+.dash-line{position:absolute;top:50%;left:0;right:0;height:0;border-top:3px dashed rgba(245,241,232,.65);z-index:1;}
+.dash-line.dotted{border-top:2px dotted rgba(245,241,232,.8);}
+.dash-line.solid{border-top:3px solid rgba(245,241,232,.85);}
+.bus-mark{position:absolute;top:52%;left:0;right:0;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;color:rgba(245,241,232,.9);z-index:1;}
+.bollards{position:absolute;top:0;bottom:34px;left:3px;display:flex;flex-direction:column;justify-content:space-evenly;z-index:2;}
+.bollards i{display:block;width:3px;height:13px;background:#F5F1E8;border-radius:2px;box-shadow:0 0 0 1px rgba(43,53,80,.25);}
+.dir-btn{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:2px 6px;border-radius:8px;border:none;background:rgba(245,241,232,.92);color:#2B3550;cursor:pointer;margin-left:3px;}
+.dir-btn:hover{background:#fff;}
+
+/* ---- Vision Zero page ---- */
+.vz-intro-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.vz-pillar{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;}
+.vz-pillar-num{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--lavender-dark);margin-bottom:8px;}
+.vz-pillar h4{font-size:15.5px;font-weight:600;margin-bottom:6px;}
+.vz-pillar p{font-size:13.5px;color:var(--slate);line-height:1.5;}
+
+.vz-finder-head{margin-bottom:22px;}
+.vz-search{width:100%;max-width:520px;font-family:'Inter',sans-serif;font-size:15px;color:var(--ink);
+ background:var(--card);border:1px solid var(--line);border-radius:26px;padding:14px 22px;transition:.15s;margin-top:6px;}
+.vz-search:focus{outline:none;border-color:var(--lavender);box-shadow:0 0 0 3px var(--lavender-light);}
+.vz-search::placeholder{color:#A5A29B;}
+.vz-count{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate);margin-top:10px;text-transform:uppercase;letter-spacing:.05em;}
+
+.vz-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+.vz-city{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:.15s;display:block;}
+.vz-city:hover{border-color:var(--lavender);transform:translateY(-2px);box-shadow:0 10px 22px -14px rgba(43,53,80,.4);}
+.vz-city-head{display:flex;align-items:baseline;gap:9px;margin-bottom:8px;}
+.vz-name{font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:20px;}
+.vz-state{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;
+ color:var(--lavender-dark);background:var(--lavender-light);padding:3px 8px;border-radius:10px;}
+.vz-desc{font-size:13.5px;color:var(--slate);line-height:1.55;margin-bottom:10px;}
+.vz-go{font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--lavender-dark);}
+
+.vz-empty{display:none;background:var(--card);border:1px dashed var(--line);border-radius:14px;padding:24px;text-align:center;}
+.vz-empty strong{display:block;margin-bottom:6px;font-size:15px;}
+.vz-empty p{font-size:13.5px;color:var(--slate);max-width:520px;margin:0 auto;}
+
+.vz-national{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;
+ background:var(--navy);color:var(--cream);border-radius:16px;padding:26px 30px;margin-top:20px;}
+.vz-nat-label{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--lavender);margin-bottom:6px;}
+.vz-national h4{font-family:'Playfair Display',serif;font-style:italic;font-size:21px;margin-bottom:5px;}
+.vz-national p{font-size:13.5px;color:#C7C4D6;max-width:420px;}
+.vz-national .btn-primary{background:var(--lavender);color:var(--navy);}
+.vz-national .btn-primary:hover{background:#C9BAE4;}
+.vz-disclaimer{font-size:12.5px;color:var(--slate);margin-top:16px;line-height:1.55;}
+
+@media (max-width:860px){.vz-intro-grid{grid-template-columns:1fr;}.vz-grid{grid-template-columns:1fr;}}
+
+/* ---- Blog post full text ---- */
+.post{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:34px 40px;margin-bottom:26px;}
+.post-meta{font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--lavender-dark);margin-bottom:10px;}
+.post h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:32px;line-height:1.14;margin-bottom:14px;}
+.post h3{font-size:17px;font-weight:600;margin:24px 0 8px;}
+.post p{font-size:15px;line-height:1.72;margin-bottom:14px;}
+.post ul{margin:0 0 16px 20px;}
+.post li{font-size:15px;line-height:1.65;margin-bottom:5px;}
+.post .lede{font-size:16.5px;color:var(--ink);}
+.post-sources{margin-top:24px;padding-top:20px;border-top:1px solid var(--line);}
+.post-sources .lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--slate);margin-bottom:10px;}
+.source-links{display:flex;gap:8px;flex-wrap:wrap;}
+.source-links a{font-size:12.5px;padding:8px 14px;border-radius:14px;border:1px solid var(--line);color:var(--slate);transition:.15s;}
+.source-links a:hover{border-color:var(--navy);color:var(--navy);transform:translateY(-1px);}
+@media (max-width:640px){.post{padding:24px 20px;}.post h2{font-size:24px;}}
+
+/* ---- Word cloud ---- */
+.cloud-shell{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:32px 36px;}
+.cloud-head .label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--lavender-dark);margin-bottom:8px;}
+.cloud-head h3{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:27px;margin-bottom:8px;}
+.cloud-head p{font-size:14px;color:var(--slate);max-width:600px;margin-bottom:20px;}
+.cloud-form{display:flex;gap:10px;flex-wrap:wrap;}
+.cloud-form input{flex:1;min-width:220px;font-family:'Inter',sans-serif;font-size:15px;color:var(--ink);
+ background:var(--cream);border:1px solid var(--line);border-radius:26px;padding:13px 20px;transition:.15s;}
+.cloud-form input:focus{outline:none;border-color:var(--lavender);box-shadow:0 0 0 3px var(--lavender-light);}
+.cloud-note{font-size:12.5px;color:var(--slate);margin-top:10px;}
+.cloud-note.ok{color:#2F6D5C;}
+.cloud-note.warn{color:#C4676A;}
+.cloud{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 16px;
+ margin-top:26px;padding:30px 20px;background:var(--cream);border-radius:16px;min-height:180px;line-height:1.25;}
+.cw{color:var(--navy);font-family:'Playfair Display',serif;font-style:italic;transition:.2s;cursor:default;}
+.cw:hover{color:var(--lavender-dark);}
+.cw-mine{color:var(--lavender-dark)!important;opacity:1!important;text-decoration:underline;text-decoration-color:var(--lavender);text-underline-offset:4px;}
+.cloud-meta{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate);margin-top:12px;text-align:center;text-transform:uppercase;letter-spacing:.05em;}
+@media (max-width:640px){.cloud-shell{padding:24px 18px;}.cloud{padding:22px 12px;gap:4px 12px;}}
+
+/* ---- Get involved: tabs ---- */
+.gi-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px;}
+.gi-tab{font-family:'Inter',sans-serif;font-size:14px;font-weight:500;padding:11px 20px;border-radius:22px;
+ border:1px solid var(--line);background:var(--card);color:var(--slate);cursor:pointer;transition:.15s;}
+.gi-tab:hover{border-color:var(--lavender);}
+.gi-tab.active{background:var(--navy);color:var(--lavender);border-color:var(--navy);}
+.gi-panel{display:none;}
+.gi-panel.active{display:block;}
+
+/* research callout */
+.research-callout{background:var(--navy);color:var(--cream);border-radius:18px;padding:30px 34px;}
+.rc-label{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--lavender);margin-bottom:12px;}
+.research-callout p{font-size:15px;line-height:1.7;color:#D6D3E0;margin-bottom:12px;}
+.research-callout strong{color:var(--cream);}
+.rc-punch{font-family:'Playfair Display',serif;font-style:italic;font-size:19px!important;line-height:1.45!important;
+ color:var(--cream)!important;border-left:3px solid var(--lavender);padding-left:16px;margin:18px 0 16px!important;}
+.rc-cite{font-size:12px;color:#9C98AE;line-height:1.6;padding-top:14px;border-top:1px solid #454E6E;}
+.rc-cite a{color:var(--lavender);}
+.rc-cite a:hover{text-decoration:underline;}
+
+/* brain cards */
+.brain-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+.brain-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 26px;}
+.bc-num{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--lavender-dark);margin-bottom:8px;}
+.brain-card h4{font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:20px;margin-bottom:10px;}
+.brain-card p{font-size:14px;line-height:1.65;color:var(--slate);margin-bottom:10px;}
+.brain-card strong{color:var(--ink);}
+.bc-do{background:var(--lavender-light);color:var(--lavender-dark)!important;font-size:13.5px!important;
+ padding:11px 14px;border-radius:10px;margin-bottom:0!important;font-weight:500;}
+
+/* script box */
+.script-box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 30px;}
+.script-step{display:flex;gap:14px;padding:14px 0;border-top:1px solid var(--line);font-size:14.5px;line-height:1.6;}
+.script-step:first-child{border-top:none;padding-top:0;}
+.ss-num{flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--navy);color:var(--lavender);
+ font-family:'IBM Plex Mono',monospace;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.script-step em{display:block;margin-top:6px;color:var(--lavender-dark);font-size:14px;}
+
+.pitfalls{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 28px;margin-top:18px;}
+.pitfalls h4{font-family:'Playfair Display',serif;font-style:italic;font-size:20px;margin-bottom:12px;}
+.pitfalls ul{margin:0;padding-left:20px;}
+.pitfalls li{font-size:14px;line-height:1.6;color:var(--slate);margin-bottom:9px;}
+.pitfalls strong{color:var(--ink);}
+
+/* atlanta block */
+.atl-block{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px 32px;margin-bottom:20px;}
+.atl-label{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;
+ color:var(--lavender-dark);background:var(--lavender-light);padding:4px 10px;border-radius:10px;display:inline-block;margin-bottom:12px;}
+.atl-block h3{font-family:'Playfair Display',serif;font-style:italic;font-size:24px;margin-bottom:10px;}
+.atl-block p{font-size:14.5px;line-height:1.68;color:var(--slate);margin-bottom:12px;}
+.atl-block strong{color:var(--ink);}
+.atl-links{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0;}
+.atl-link{display:flex;gap:12px;align-items:flex-start;background:var(--cream);border:1px solid var(--line);
+ border-radius:12px;padding:14px 16px;transition:.15s;}
+.atl-link:hover{border-color:var(--lavender);transform:translateY(-2px);}
+.al-step{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--lavender);color:var(--navy);
+ font-family:'IBM Plex Mono',monospace;font-size:11px;display:flex;align-items:center;justify-content:center;}
+.atl-link strong{display:block;font-size:14px;margin-bottom:2px;}
+.atl-link span:not(.al-step){font-size:12.5px;color:var(--slate);line-height:1.45;}
+.atl-tip{font-size:13.5px!important;background:var(--cream);border-radius:10px;padding:13px 16px;margin-bottom:10px!important;}
+
+.anywhere-block{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px 32px;}
+.anywhere-block h3{font-family:'Playfair Display',serif;font-style:italic;font-size:23px;margin-bottom:8px;}
+.anywhere-block>p{font-size:14.5px;color:var(--slate);margin-bottom:14px;}
+.anywhere-list{margin:0;padding-left:20px;}
+.anywhere-list li{font-size:14.5px;line-height:1.65;color:var(--slate);margin-bottom:11px;}
+.anywhere-list strong{color:var(--ink);}
+
+/* glossary */
+.gl-count{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate);margin:10px 0 18px;text-transform:uppercase;letter-spacing:.05em;}
+.gl-list{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.gl-item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;}
+.gl-term{font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:18px;margin-bottom:7px;}
+.gl-def{font-size:13.5px;line-height:1.6;color:var(--slate);}
+.gl-empty{display:none;background:var(--card);border:1px dashed var(--line);border-radius:14px;padding:24px;text-align:center;font-size:14px;color:var(--slate);}
+.gl-empty a{color:var(--lavender-dark);text-decoration:underline;}
+
+@media (max-width:860px){.brain-grid,.gl-list,.atl-links{grid-template-columns:1fr;}
+ .research-callout,.atl-block,.anywhere-block,.script-box{padding:22px 20px;}}
+
+/* ---- Carousel slide viewer ---- */
+.carousel-post{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:32px 38px;margin-bottom:22px;}
+.cp-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:6px;}
+.cp-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;
+ color:var(--lavender-dark);background:var(--lavender-light);padding:4px 10px;border-radius:10px;}
+.cp-count{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--slate);text-transform:uppercase;letter-spacing:.05em;}
+.carousel-post h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:30px;line-height:1.15;margin:10px 0 8px;}
+.cp-sub{font-size:15px;color:var(--slate);line-height:1.6;margin-bottom:22px;max-width:620px;}
+
+.slides{display:flex;flex-direction:column;gap:0;}
+.slide{display:flex;gap:20px;padding:20px 0;border-top:1px solid var(--line);}
+.slide:first-child{border-top:none;padding-top:0;}
+.slide-num{flex-shrink:0;width:34px;height:34px;border-radius:50%;background:var(--navy);color:var(--lavender);
+ font-family:'IBM Plex Mono',monospace;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.slide-body{flex:1;min-width:0;}
+.slide-head{font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:21px;line-height:1.25;margin-bottom:7px;}
+.slide-text{font-size:15px;line-height:1.7;color:var(--ink);}
+.slide.is-cover .slide-num{background:var(--lavender);color:var(--navy);}
+.slide.is-cover .slide-head{font-size:25px;}
+.slide.is-cta{background:var(--cream);border-radius:14px;padding:20px 22px;margin-top:14px;border-top:none;}
+.slide.is-cta .slide-num{background:var(--green,#2F6D5C);color:#fff;}
+
+.cp-foot{margin-top:24px;padding-top:20px;border-top:1px solid var(--line);
+ display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;}
+.cp-foot p{font-size:13px;color:var(--slate);max-width:420px;}
+.cp-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.cp-btn{font-size:13px;font-weight:600;padding:10px 18px;border-radius:22px;transition:.15s;}
+.cp-btn.primary{background:var(--navy);color:var(--cream);}
+.cp-btn.primary:hover{background:var(--navy-2);transform:translateY(-1px);}
+.cp-btn.ghost{border:1px solid var(--line);color:var(--slate);}
+.cp-btn.ghost:hover{border-color:var(--navy);color:var(--navy);}
+@media (max-width:640px){.carousel-post{padding:24px 20px;}.carousel-post h2{font-size:23px;}
+ .slide{gap:13px;}.slide-num{width:28px;height:28px;font-size:11px;}.slide-head{font-size:18px;}}
+
+/* ---- Flashcards / quiz ---- */
+.gl-modes{display:flex;gap:8px;margin:16px 0 6px;flex-wrap:wrap;align-items:center;}
+.gl-mode{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.05em;
+ padding:8px 15px;border-radius:18px;border:1px solid var(--line);background:var(--card);color:var(--slate);cursor:pointer;transition:.15s;}
+.gl-mode:hover{border-color:var(--lavender);}
+.gl-mode.active{background:var(--navy);color:var(--lavender);border-color:var(--navy);}
+.sel-info{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--lavender-dark);margin-left:auto;}
+
+.gl-item{position:relative;}
+.gl-item.selectable{cursor:pointer;}
+.gl-item.selectable:hover{border-color:var(--lavender);}
+.gl-item.picked{border-color:var(--lavender);background:var(--lavender-light);}
+.gl-check{position:absolute;top:14px;right:16px;width:20px;height:20px;border-radius:6px;
+ border:1.5px solid var(--line);background:var(--card);display:none;align-items:center;justify-content:center;
+ font-size:12px;color:var(--navy);}
+.gl-item.selectable .gl-check{display:flex;}
+.gl-item.picked .gl-check{background:var(--lavender);border-color:var(--lavender);}
+.gl-item.selectable .gl-term{padding-right:30px;}
+
+.study-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--navy);color:var(--cream);
+ border-radius:14px;padding:14px 20px;margin-bottom:18px;}
+.study-bar .sb-label{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--lavender);}
+.sb-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.05em;
+ padding:8px 16px;border-radius:18px;border:none;cursor:pointer;background:var(--lavender);color:var(--navy);transition:.15s;}
+.sb-btn:hover{background:#C9BAE4;}
+.sb-btn.ghost{background:transparent;border:1px solid #545E80;color:#C7C4D6;}
+.sb-btn.ghost:hover{border-color:var(--lavender);color:var(--lavender);}
+.sb-count{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#C7C4D6;}
+
+/* card */
+.fc-stage{display:none;}
+.fc-stage.on{display:block;}
+.flashcard{perspective:1400px;margin-bottom:16px;}
+.fc-inner{position:relative;width:100%;min-height:250px;transition:transform .55s cubic-bezier(.4,.2,.2,1);
+ transform-style:preserve-3d;cursor:pointer;}
+.fc-inner.flipped{transform:rotateY(180deg);}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;padding:34px 38px;
+ display:flex;flex-direction:column;justify-content:center;border:1px solid var(--line);}
+.fc-front{background:var(--card);}
+.fc-back{background:var(--navy);color:var(--cream);transform:rotateY(180deg);border-color:var(--navy);}
+.fc-hint{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;
+ color:var(--lavender-dark);margin-bottom:14px;}
+.fc-back .fc-hint{color:var(--lavender);}
+.fc-term{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:32px;line-height:1.15;}
+.fc-def{font-size:15.5px;line-height:1.7;color:#D6D3E0;}
+.fc-tap{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--slate);margin-top:18px;text-transform:uppercase;letter-spacing:.05em;}
+.fc-back .fc-tap{color:#9C98AE;}
+.fc-nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.fc-progress{flex:1;min-width:120px;height:6px;background:var(--line);border-radius:4px;overflow:hidden;}
+.fc-progress i{display:block;height:100%;background:var(--lavender);width:0;transition:width .3s;}
+
+/* quiz */
+.quiz-stage{display:none;}
+.quiz-stage.on{display:block;}
+.quiz-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px 34px;}
+.quiz-q{font-size:15px;line-height:1.7;margin-bottom:20px;color:var(--ink);}
+.quiz-q strong{display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;
+ letter-spacing:.06em;color:var(--lavender-dark);margin-bottom:10px;font-weight:500;}
+.quiz-opts{display:flex;flex-direction:column;gap:9px;}
+.quiz-opt{text-align:left;font-family:'Inter',sans-serif;font-size:14.5px;padding:14px 18px;border-radius:12px;
+ border:1px solid var(--line);background:var(--cream);color:var(--ink);cursor:pointer;transition:.15s;}
+.quiz-opt:hover:not(:disabled){border-color:var(--lavender);transform:translateX(3px);}
+.quiz-opt:disabled{cursor:default;}
+.quiz-opt.right{background:#E4EEEA;border-color:#2F6D5C;color:#245043;font-weight:500;}
+.quiz-opt.wrong{background:#F7E7E7;border-color:#C4676A;color:#8F3B3B;}
+.quiz-feedback{margin-top:16px;padding-top:16px;border-top:1px solid var(--line);font-size:14px;line-height:1.6;color:var(--slate);}
+.quiz-score{background:var(--navy);color:var(--cream);border-radius:18px;padding:34px 38px;text-align:center;}
+.quiz-score .qs-num{font-family:'Playfair Display',serif;font-weight:700;font-size:46px;line-height:1;}
+.quiz-score .qs-of{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--lavender);margin:8px 0 14px;}
+.quiz-score p{font-size:14.5px;color:#C7C4D6;margin-bottom:20px;max-width:420px;margin-left:auto;margin-right:auto;}
+@media (max-width:640px){.fc-face{padding:26px 22px;}.fc-term{font-size:25px;}.quiz-card{padding:22px 20px;}}
+
+/* ---- Resources ---- */
+.res-section{margin-bottom:34px;}
+.res-head{margin-bottom:16px;}
+.res-head h3{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:24px;margin-bottom:6px;}
+.res-head p{font-size:14px;color:var(--slate);max-width:660px;line-height:1.6;}
+.res-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px;}
+.res-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;display:block;transition:.15s;}
+.res-card:hover{border-color:var(--lavender);transform:translateY(-2px);box-shadow:0 10px 20px -14px rgba(43,53,80,.4);}
+.res-top{display:flex;align-items:baseline;gap:9px;margin-bottom:7px;flex-wrap:wrap;}
+.res-name{font-weight:600;font-size:15.5px;}
+.res-kind{font-family:'IBM Plex Mono',monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;
+ padding:3px 8px;border-radius:9px;background:var(--lavender-light);color:var(--lavender-dark);}
+.res-kind.k-yt{background:#F7E7E7;color:#A33F3F;}
+.res-kind.k-pod{background:#E4EEEA;color:#2F6D5C;}
+.res-kind.k-org{background:#E7EBF2;color:var(--blue);}
+.res-desc{font-size:13.5px;color:var(--slate);line-height:1.55;}
+.res-go{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.05em;
+ color:var(--lavender-dark);margin-top:9px;display:inline-block;}
+
+/* books */
+.book-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px;}
+.book{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;display:flex;gap:16px;}
+.book-spine{flex-shrink:0;width:38px;height:56px;border-radius:3px 6px 6px 3px;position:relative;
+ background:var(--navy);box-shadow:inset -4px 0 0 rgba(0,0,0,.18);}
+.book-spine.b2{background:var(--lavender-dark);}
+.book-spine.b3{background:#2F6D5C;}
+.book-spine.b4{background:#8A5900;}
+.book-spine.b5{background:#A33F3F;}
+.book-spine.b6{background:var(--blue);}
+.book-info{flex:1;min-width:0;}
+.book-title{font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:17px;line-height:1.25;margin-bottom:3px;}
+.book-author{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--lavender-dark);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;}
+.book-note{font-size:13px;color:var(--slate);line-height:1.55;}
+
+/* rebate finder */
+.rebate-box{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px 32px;}
+.rb-steps{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:18px 0;}
+.rb-step{background:var(--cream);border-radius:12px;padding:16px 18px;}
+.rb-step .n{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--lavender-dark);margin-bottom:6px;}
+.rb-step strong{display:block;font-size:14.5px;margin-bottom:4px;}
+.rb-step span{font-size:13px;color:var(--slate);line-height:1.5;}
+.rb-search{background:var(--navy);color:var(--cream);border-radius:12px;padding:18px 22px;margin:16px 0;}
+.rb-search .lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--lavender);margin-bottom:10px;}
+.rb-q{font-family:'IBM Plex Mono',monospace;font-size:13px;background:rgba(255,255,255,.07);border:1px solid #454E6E;
+ border-radius:8px;padding:10px 14px;margin-bottom:7px;color:#E4E1EC;}
+.rb-q:last-child{margin-bottom:0;}
+.rb-warn{font-size:13px;color:var(--slate);line-height:1.6;background:#F5EDE3;border-radius:10px;padding:14px 16px;margin-top:14px;}
+.rb-warn strong{color:#8A5900;}
+@media (max-width:860px){.res-grid,.book-grid,.rb-steps{grid-template-columns:1fr;}}
+
+/* ---- Blog news feed ---- */
+.feed-box{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px 32px;margin-bottom:24px;}
+.feed-box h3{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:23px;margin-bottom:6px;}
+.feed-box>p{font-size:14px;color:var(--slate);margin-bottom:18px;max-width:620px;line-height:1.6;}
+.feed-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;}
+.feed-link{background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:block;transition:.15s;}
+.feed-link:hover{border-color:var(--lavender);transform:translateY(-2px);}
+.feed-name{font-weight:600;font-size:14px;margin-bottom:3px;}
+.feed-what{font-size:12.5px;color:var(--slate);line-height:1.45;}
+@media (max-width:860px){.feed-grid{grid-template-columns:1fr 1fr;}}
+@media (max-width:560px){.feed-grid{grid-template-columns:1fr;}.feed-box{padding:22px 20px;}}
+
+/* ---- About band ---- */
+.about{padding:20px 0 8px;}
+.about-shell{background:var(--card);border:1px solid var(--line);border-radius:20px;
+ padding:36px 40px;display:grid;grid-template-columns:0.7fr 1.3fr;gap:40px;align-items:start;}
+.about-visual{position:relative;}
+.about-photo{aspect-ratio:4/5;border-radius:16px;background:var(--navy);overflow:hidden;position:relative;
+ display:flex;align-items:center;justify-content:center;}
+.about-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+.about-mono{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:56px;color:var(--lavender);}
+.about-photo::after{content:'';position:absolute;left:0;right:0;bottom:0;height:6px;background:var(--lavender);}
+.about-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;}
+.chip{font-family:'IBM Plex Mono',monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;
+ padding:5px 10px;border-radius:11px;background:var(--cream);border:1px solid var(--line);color:var(--slate);}
+
+.about-body .label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;
+ letter-spacing:.06em;color:var(--lavender-dark);margin-bottom:10px;}
+.about-body h3{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:29px;margin-bottom:14px;}
+.about-body p{font-size:15px;line-height:1.72;color:var(--ink);margin-bottom:13px;}
+.about-body p:last-of-type{margin-bottom:0;}
+.about-body .muted{color:var(--slate);}
+.about-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;padding-top:18px;border-top:1px solid var(--line);}
+.about-link{font-size:13px;font-weight:500;padding:9px 16px;border-radius:20px;border:1px solid var(--line);
+ color:var(--slate);transition:.15s;}
+.about-link:hover{border-color:var(--navy);color:var(--navy);transform:translateY(-1px);}
+@media (max-width:820px){.about-shell{grid-template-columns:1fr;gap:26px;padding:28px 22px;}
+ .about-photo{aspect-ratio:16/10;max-width:100%;}.about-body h3{font-size:24px;}}
+</style>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async="" src="https://plausible.io/js/pa-1AO4dRE5cw9bBvKAG6_i9.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="brand">A City <span class="tag">in motion</span></a>
+    <nav class="links">
+      <a href="index.html">Home</a>
+      <a href="episodes.html">Episodes</a>
+      <a href="visionzero.html">Vision Zero</a>
+      <a href="yourstreet.html">Your Street</a>
+      <a href="getinvolved.html" class="active">Get Involved</a>
+      <a href="blog.html">Blog</a>
+    </nav>
+    <a href="index.html#subscribe" class="nav-cta">Subscribe</a>
+  </div>
+</header>
+
+<section class="page-head">
+  <div class="wrap">
+    <h1>Get involved</h1>
+    <p>While many people care deeply about their street, few of them ever speak at a public meeting. It is usually not because they lack standing; it is because no one has explained how the room works. This page walks through it, step by step.</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:4px;">
+  <div class="wrap">
+    <div class="gi-tabs" id="gi-tabs">
+      <button class="gi-tab active" data-t="speak">How to be heard</button>
+      <button class="gi-tab" data-t="find">Find your meeting</button>
+      <button class="gi-tab" data-t="resources">Learn more</button>
+      <button class="gi-tab" data-t="glossary">Glossary</button>
+    </div>
+
+    <!-- ============ SPEAK ============ -->
+    <div class="gi-panel active" id="gi-speak">
+
+      <div class="research-callout">
+        <div class="rc-label">Start here — the research</div>
+        <p>Political scientists at Boston University coded thousands of individual comments at planning and zoning meetings across 97 cities and matched every speaker to voter records. What they found: <strong>the people who show up are older, more often male, longtime residents, and homeowners</strong> — and they oppose new development at rates far above the general public.</p>
+        <p>The follow-up study is the part that should change how you think about this. When meetings moved to Zoom during COVID, researchers expected participation to broaden. It didn't. The paper is titled <em>Still Muted</em> for a reason.</p>
+        <p class="rc-punch">The room is not a representative sample of the community; it is a small, self-selected group. This means one person who shows up carries far more weight than he or she would expect. While that gap is a real problem, it is also an opening for anyone willing to attend.</p>
+        <div class="rc-cite">Einstein, Palmer &amp; Glick, <em>Who Participates in Local Government? Evidence from Meeting Minutes</em>, Perspectives on Politics (2018) — winner of the APSA Heinz Eulau Award. Follow-up: <em>Still Muted</em>, Urban Affairs Review (2022).
+          <a href="https://sites.bu.edu/kleinstein/research/" target="_blank" rel="noopener">Read the research →</a></div>
+      </div>
+
+      <h2 class="section-title" style="margin-top:34px;">How the brain in the room actually works</h2>
+      <p class="section-sub" style="max-width:660px;">Public comment is a persuasion problem, and persuasion has been studied for decades. Almost none of that research makes it into advocacy guides. Here's what matters.</p>
+
+      <div class="brain-grid">
+        <div class="brain-card">
+          <div class="bc-num">01</div>
+          <h4>A number is not a story</h4>
+          <p>Thomas Schelling wrote in 1968 that a specific person's death evokes sentiment and awe, while statistical death evokes almost nothing. Decades of research followed, and there's real debate about how strong the effect is — recent replications have found it smaller and less reliable than early studies suggested.</p>
+          <p><strong>But the practical lesson survives the debate:</strong> a crash statistic gives a council member nothing to picture. Your account of the specific corner where your daughter was nearly hit gives them something they'll still be thinking about at dinner.</p>
+          <p class="bc-do">Lead with the specific. Use the number as backup, not as the argument.</p>
+        </div>
+
+        <div class="brain-card">
+          <div class="bc-num">02</div>
+          <h4>Losses land harder than gains</h4>
+          <p>Kahneman and Tversky's prospect theory holds up across an enormous body of work: people feel a loss roughly twice as intensely as an equivalent gain. This is why the opposition at these meetings is so effective — they aren't arguing about traffic modeling. They're saying <em>you are taking my parking space.</em> That is a loss, and it registers viscerally.</p>
+          <p><strong>Safety advocates usually argue the opposite way,</strong> promising a future gain: fewer crashes, more people biking. Gains are abstract and discounted.</p>
+          <p class="bc-do">Name what's already being lost. Not "this would make it safer" but "right now I can't let my kid walk to school — that's already gone."</p>
+        </div>
+
+        <div class="brain-card">
+          <div class="bc-num">03</div>
+          <h4>Facts don't dislodge identity</h4>
+          <p>Motivated reasoning is one of the most replicated findings in political psychology: when information threatens something central to how someone sees themselves, they scrutinize it harder and often leave more convinced of what they already believed.</p>
+          <p>“Cars are dangerous” sounds to a lifelong driver like <em>you are the problem.</em> Defenses go up and nothing after that lands.</p>
+          <p class="bc-do">Attack the design, never the person. “This intersection sets drivers up to fail” keeps everyone on the same side of the table.</p>
+        </div>
+
+        <div class="brain-card">
+          <div class="bc-num">04</div>
+          <h4>The curse of knowledge</h4>
+          <p>Once you know something, you can't reconstruct not knowing it. Engineers and planners say “road diet” and “LPI” without registering that half the room just stopped following. The listener rarely admits it — they nod and disengage.</p>
+          <p><strong>The reverse is your advantage.</strong> If you're not a professional, you're the only person in the room who can say it plainly, and plain language is more persuasive to the other non-experts sitting there.</p>
+          <p class="bc-do">Say it the way you'd say it to a neighbor. Check the glossary tab so the jargon doesn't lose you.</p>
+        </div>
+
+        <div class="brain-card">
+          <div class="bc-num">05</div>
+          <h4>People follow people, not arguments</h4>
+          <p>Cialdini's work on social proof shows we look to others to decide what's normal, especially when we're uncertain. In a room where five people speak against something and nobody speaks for it, silence reads as consensus — even when the silent majority disagrees.</p>
+          <p class="bc-do">Bring one other person. Two voices on the same side changes what the room sounds like far more than doubling the strength of your argument would.</p>
+        </div>
+
+        <div class="brain-card">
+          <div class="bc-num">06</div>
+          <h4>First and last get remembered</h4>
+          <p>Primacy and recency effects are foundational memory findings: the beginning and end of a list survive; the middle blurs. In a two-minute comment following twenty others, the middle is gone.</p>
+          <p class="bc-do">Open with your one sentence. Close with your specific ask. Everything else is support.</p>
+        </div>
+      </div>
+
+      <h2 class="section-title" style="margin-top:38px;">The two-minute comment</h2>
+      <p class="section-sub">Most public comment periods give you two minutes. Here's a structure that uses all of it.</p>
+
+      <div class="script-box">
+        <div class="script-step"><span class="ss-num">1</span><div>
+          <strong>Name and where you live.</strong> Ten seconds. Being a resident is your entire credential — you don't need another one.
+          <em>“My name is Jeremiah, I live on Lucile Avenue in West End.”</em></div></div>
+        <div class="script-step"><span class="ss-num">2</span><div>
+          <strong>Your one sentence.</strong> Say the ask immediately. Don't build to it — you may get cut off.
+          <em>“I'm asking for a marked crosswalk at Lucile and Lawton.”</em></div></div>
+        <div class="script-step"><span class="ss-num">3</span><div>
+          <strong>The specific story.</strong> Thirty to forty seconds. One incident, concrete detail, no generalizing.
+          <em>“Two weeks ago at 7:40am a car went past me while I was halfway across with my son. There's no crosswalk there and the nearest one is three blocks up.”</em></div></div>
+        <div class="script-step"><span class="ss-num">4</span><div>
+          <strong>Name the loss.</strong> What you've already given up because of how it is now.
+          <em>“We drive four blocks to a school we should be able to walk to.”</em></div></div>
+        <div class="script-step"><span class="ss-num">5</span><div>
+          <strong>One piece of evidence.</strong> One only. Local beats federal.
+          <em>“This corridor is on the city's High Injury Network.”</em></div></div>
+        <div class="script-step"><span class="ss-num">6</span><div>
+          <strong>Repeat the ask and stop.</strong> Restate it in the same words, then stop talking. Ending early is more powerful than being cut off.</div></div>
+      </div>
+
+      <div class="pitfalls">
+        <h4>What quietly costs you the room</h4>
+        <ul>
+          <li><strong>Listing every problem.</strong> Three asks is zero asks. Pick one.</li>
+          <li><strong>Speaking for “the community.”</strong> Speak for yourself — it's harder to dismiss and impossible to contradict.</li>
+          <li><strong>Anger at the people in the room.</strong> Staff usually agree with you and are constrained by things you can't see. Make them an ally.</li>
+          <li><strong>Only showing up in opposition.</strong> Agencies hear from people almost exclusively when something is wrong. Thanking them when something works buys real credit.</li>
+          <li><strong>Assuming one meeting settles it.</strong> Showing up three times makes you a known quantity. That matters more than eloquence.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- ============ FIND ============ -->
+    <div class="gi-panel" id="gi-find">
+      <h2 class="section-title">Find your meeting</h2>
+      <p class="section-sub" style="max-width:660px;">For most people, the hardest part is not speaking. It is finding out where and when to show up. Below is the path for Atlanta, followed by a method that works in any city.</p>
+
+      <div class="atl-block">
+        <div class="atl-label">Atlanta</div>
+        <h3>Neighborhood Planning Units</h3>
+        <p>Atlanta is unusual, and in a good way. The city is divided into <strong>25 Neighborhood Planning Units</strong> — citizen advisory councils that make recommendations to the Mayor and City Council on zoning, land use, and planning matters. Mayor Maynard Jackson established the system in 1974 specifically to give residents a formal channel into city planning.</p>
+        <p>Membership is open to <strong>anyone 18 or older whose primary residence is in the NPU</strong>, plus anyone who owns property or runs a business there. There's no application. You live there, you're a member. Each NPU meets monthly.</p>
+        <div class="atl-links">
+          <a href="https://gis.atlantaga.gov/propinfo" target="_blank" rel="noopener" class="atl-link">
+            <span class="al-step">1</span><div><strong>Find your NPU by address</strong><span>Enter your address in the Property Info map — returns your NPU, neighborhood, and zoning</span></div></a>
+          <a href="https://www.atlantaga.gov/government/departments/city-planning/neighborhood-planning-units/neighborhood-and-npu-contacts" target="_blank" rel="noopener" class="atl-link">
+            <span class="al-step">2</span><div><strong>Meeting dates, agendas &amp; Zoom links</strong><span>Every NPU's schedule, contacts, city planner, and remote access details</span></div></a>
+          <a href="https://citycouncil.atlantaga.gov/other/neighborhood-planning-unit/npu-schedule" target="_blank" rel="noopener" class="atl-link">
+            <span class="al-step">3</span><div><strong>City Council NPU schedule</strong><span>Times, places, and links to upcoming agendas</span></div></a>
+          <a href="https://www.atlantaga.gov/government/departments/city-planning/neighborhood-planning-units" target="_blank" rel="noopener" class="atl-link">
+            <span class="al-step">4</span><div><strong>How the NPU system works</strong><span>Background from the Department of City Planning</span></div></a>
+        </div>
+        <p class="atl-tip"><strong>Worth knowing:</strong> most NPUs still offer a Zoom option, and many meet in the evening. If you can't get to a room, you can often still speak. If you're unsure which NPU you're in, the city's NPU office can confirm it and tell you when they meet — (404) 330-6070.</p>
+        <p class="atl-tip"><strong>One catch:</strong> plenty of addresses with an Atlanta mailing address sit outside city limits. If the property lookup doesn't return an NPU, you're likely in unincorporated DeKalb or Fulton — check your county's site instead.</p>
+      </div>
+
+      <div class="anywhere-block">
+        <h3>Anywhere else — the method</h3>
+        <p>Most cities don't have an NPU system, but every city has some version of this. Work down the list:</p>
+        <ol class="anywhere-list">
+          <li><strong>Find who owns your street.</strong> City, county, or state DOT — this determines who you talk to, and getting it wrong wastes months. Your city's GIS or property map usually shows it.</li>
+          <li><strong>Search “[your city] city council district lookup.”</strong> Nearly every city has an address tool. Your council member is your most direct line.</li>
+          <li><strong>Search “[your city] neighborhood association [your neighborhood].”</strong> These meet monthly, are easier to speak at than council, and often carry real weight with staff.</li>
+          <li><strong>Look for the transportation or public works committee.</strong> Full council meetings are broad; committee meetings are where street decisions actually get discussed, and they're far less crowded.</li>
+          <li><strong>Check your state's open meetings law.</strong> Every state requires public bodies to post agendas in advance — usually 24 to 72 hours. Find where yours are posted and check weekly.</li>
+          <li><strong>Email before you attend.</strong> A short note to the council member's staff or the city's transportation department often gets a faster answer than a meeting comment, and it creates a written record.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- ============ GLOSSARY ============ -->
+        <div class="gi-panel" id="gi-resources">
+
+      <div class="res-section">
+        <div class="res-head">
+          <h3>Organizations worth following</h3>
+          <p>These are the organizations where much of the research, guidance, and debate originates. If you reference one of them in a meeting, people will know the source.</p>
+        </div>
+        <div class="res-grid">
+          <a href="https://nacto.org/" target="_blank" rel="noopener" class="res-card">
+            <div class="res-top"><span class="res-name">NACTO</span><span class="res-kind k-org">Standards</span></div>
+            <p class="res-desc">National Association of City Transportation Officials. Their Urban Street Design Guide and Urban Bikeway Design Guide are the practical counterweight to older highway-oriented standards. Also republished the FHWA countermeasure documents after they were removed.</p>
+            <span class="res-go">nacto.org →</span></a>
+
+          <a href="https://www.ite.org/" target="_blank" rel="noopener" class="res-card">
+            <div class="res-top"><span class="res-name">ITE</span><span class="res-kind k-org">Professional</span></div>
+            <p class="res-desc">Institute of Transportation Engineers. The professional home for the field — technical resources, local chapters, and the Vision Zero and Complete Streets councils. Local chapter meetings are one of the easiest ways into the profession.</p>
+            <span class="res-go">ite.org →</span></a>
+
+          <a href="https://www.strongtowns.org/" target="_blank" rel="noopener" class="res-card">
+            <div class="res-top"><span class="res-name">Strong Towns</span><span class="res-kind k-org">Advocacy</span></div>
+            <p class="res-desc">Chuck Marohn's organization, arguing that the way North America builds is financially insolvent, not just unsafe. Their "stroad" concept and Crash Analysis Studio have changed how a lot of practitioners talk about design. Local conversation chapters in most metros.</p>
+            <span class="res-go">strongtowns.org →</span></a>
+
+          <a href="https://smartgrowthamerica.org/" target="_blank" rel="noopener" class="res-card">
+            <div class="res-top"><span class="res-name">Smart Growth America</span><span class="res-kind k-org">Policy</span></div>
+            <p class="res-desc">Home of the National Complete Streets Coalition and the <em>Dangerous by Design</em> report, which ranks metros by pedestrian fatality rates. That report is one of the most-cited documents in local safety advocacy.</p>
+            <span class="res-go">smartgrowthamerica.org →</span></a>
+
+          <a href="https://visionzeronetwork.org/" target="_blank" rel="noopener" class="res-card">
+            <div class="res-top"><span class="res-name">Vision Zero Network</span><span class="res-kind k-org">Advocacy</span></div>
+            <p class="res-desc">Tracks which US cities have Vision Zero commitments and what they're actually doing about them. Useful for seeing whether your city's pledge came with a plan.</p>
+            <span class="res-go">visionzeronetwork.org →</span></a>
+
+          <a href="https://www.dutchcycling.nl/" target="_blank" rel="noopener" class="res-card">
+            <div class="res-top"><span class="res-name">Dutch Cycling Embassy</span><span class="res-kind k-org">International</span></div>
+            <p class="res-desc">A public-private network that exports Dutch cycling expertise. Their design principles, study tours, and free resources are the most direct route to understanding how the Netherlands actually did it — and it wasn't culture.</p>
+            <span class="res-go">dutchcycling.nl →</span></a>
+
+          <a href="https://www.crowplatform.com/" target="_blank" rel="noopener" class="res-card">
+            <div class="res-top"><span class="res-name">CROW</span><span class="res-kind k-org">Standards</span></div>
+            <p class="res-desc">The Dutch technical platform behind the <em>Design Manual for Bicycle Traffic</em> — the reference NACTO's bikeway guide draws from. This is the source document for protected intersection geometry.</p>
+            <span class="res-go">crowplatform.com →</span></a>
+
+          <a href="https://usa.streetsblog.org/" target="_blank" rel="noopener" class="res-card">
+            <div class="res-top"><span class="res-name">Streetsblog</span><span class="res-kind k-org">News</span></div>
+            <p class="res-desc">Daily reporting on street safety, transit, and transportation policy, with city-specific editions. Openly advocacy-oriented — read it knowing that, and it's the fastest way to keep up.</p>
+            <span class="res-go">usa.streetsblog.org →</span></a>
+        </div>
+      </div>
+
+      <div class="res-section">
+        <div class="res-head">
+          <h3>Watch</h3>
+          <p>One of the best ways to understand street design is to see it. These channels can explain in ten minutes what often takes a report fifty pages.</p>
+        </div>
+        <div class="res-grid">
+          <a href="https://www.youtube.com/@NotJustBikes" target="_blank" rel="noopener" class="res-card">
+            <div class="res-top"><span class="res-name">Not Just Bikes</span><span class="res-kind k-yt">YouTube</span></div>
+            <p class="res-desc">A Canadian who moved to Amsterdam and started documenting why everything works better there. The videos on stroads, protected intersections, and "the Dutch aren't just different" are the standard recommendation for anyone new to this. Sharp, sometimes blunt about North American design.</p>
+            <span class="res-go">youtube.com/@NotJustBikes →</span></a>
+
+          <a href="https://www.youtube.com/@ActiveTowns" target="_blank" rel="noopener" class="res-card">
+            <div class="res-top"><span class="res-name">Active Towns</span><span class="res-kind k-yt">YouTube + Podcast</span></div>
+            <p class="res-desc">John Simmerman's channel and podcast, focused on active mobility and healthy communities. More interview-driven and less polemical than most of this space — a good complement if you want practitioners talking at length.</p>
+            <span class="res-go">youtube.com/@ActiveTowns →</span></a>
+
+          <a href="https://www.youtube.com/@BicycleDutch" target="_blank" rel="noopener" class="res-card">
+            <div class="res-top"><span class="res-name">BicycleDutch</span><span class="res-kind k-yt">YouTube</span></div>
+            <p class="res-desc">Mark Wagenbuur has been documenting Dutch infrastructure for over a decade, often filming the same intersection before and after reconstruction. Less commentary, more evidence. Invaluable if you want to see how a design actually behaves.</p>
+            <span class="res-go">youtube.com/@BicycleDutch →</span></a>
+
+          <a href="https://www.youtube.com/@CityBeautiful" target="_blank" rel="noopener" class="res-card">
+            <div class="res-top"><span class="res-name">City Beautiful</span><span class="res-kind k-yt">YouTube</span></div>
+            <p class="res-desc">Dave Amos is an actual planning professor, and it shows — the videos explain the mechanics of zoning, parking minimums, and land use with more nuance than most of the genre.</p>
+            <span class="res-go">youtube.com/@CityBeautiful →</span></a>
+        </div>
+      </div>
+
+      <div class="res-section">
+        <div class="res-head">
+          <h3>Listen</h3>
+          <p>Long-form conversations with the people doing this work, and good company on a commute.</p>
+        </div>
+        <div class="res-grid">
+          <a href="https://podcasts.apple.com/us/podcast/a-city-in-motion/id1836499244" target="_blank" rel="noopener" class="res-card">
+            <div class="res-top"><span class="res-name">A City in Motion</span><span class="res-kind k-pod">Podcast</span></div>
+            <p class="res-desc">Ours. Conversations with the planners, engineers, and agency leaders shaping transit and Vision Zero, city by city.</p>
+            <span class="res-go">Listen →</span></a>
+
+          <a href="https://www.strongtowns.org/podcast" target="_blank" rel="noopener" class="res-card">
+            <div class="res-top"><span class="res-name">Strong Towns Podcast</span><span class="res-kind k-pod">Podcast</span></div>
+            <p class="res-desc">Chuck Marohn on the financial mechanics underneath development patterns. The recurring argument — that the growth model doesn't pay for its own maintenance — reframes safety as a budget question too.</p>
+            <span class="res-go">Listen →</span></a>
+
+          <a href="https://thewaroncars.org/" target="_blank" rel="noopener" class="res-card">
+            <div class="res-top"><span class="res-name">The War on Cars</span><span class="res-kind k-pod">Podcast</span></div>
+            <p class="res-desc">Provocative title, serious show. Reclaims a phrase used against safety advocates and covers car dependency, street design, and the politics of both. Find it wherever you get podcasts.</p>
+            <span class="res-go">thewaroncars.org →</span></a>
+
+          <a href="https://www.ite.org/" target="_blank" rel="noopener" class="res-card">
+            <div class="res-top"><span class="res-name">ITE Talks Transportation</span><span class="res-kind k-pod">Podcast</span></div>
+            <p class="res-desc">ITE's own interview series with transportation leaders. More technical and institutional in tone — useful for understanding how the profession talks to itself.</p>
+            <span class="res-go">Listen →</span></a>
+        </div>
+      </div>
+
+      <div class="res-section">
+        <div class="res-head">
+          <h3>Read</h3>
+          <p>A place to start. You do not need to read all of them; any two will change how you see the street outside your door.</p>
+        </div>
+        <div class="book-grid">
+          <div class="book"><div class="book-spine"></div><div class="book-info">
+            <div class="book-title">Walkable City</div>
+            <div class="book-author">Jeff Speck</div>
+            <p class="book-note">The most accessible entry point in the field. Speck's "general theory of walkability" — a walk must be useful, safe, comfortable, and interesting — is a framework you'll find yourself using constantly. Start here if you're starting anywhere. The follow-up, <em>Walkable City Rules</em>, is 101 specific things a city can actually do.</p></div></div>
+
+          <div class="book"><div class="book-spine b2"></div><div class="book-info">
+            <div class="book-title">Curbing Traffic</div>
+            <div class="book-author">Melissa &amp; Chris Bruntlett</div>
+            <p class="book-note">Written after the authors moved their family from Vancouver to Delft. The argument isn't that fewer cars is safer — it's that it's better: quieter, more social, less stressful, easier on children and older people. The human case, not the engineering one.</p></div></div>
+
+          <div class="book"><div class="book-spine b3"></div><div class="book-info">
+            <div class="book-title">Inclusive Transportation</div>
+            <div class="book-author">Veronica O. Davis</div>
+            <p class="book-note">A working transportation engineer on how the profession divided communities — and what repairing that requires. Rare in being written by someone inside the field who is direct about its history. Essential if equity is part of your work.</p></div></div>
+
+          <div class="book"><div class="book-spine b4"></div><div class="book-info">
+            <div class="book-title">Engineering in Plain Sight</div>
+            <div class="book-author">Grady Hillhouse</div>
+            <p class="book-note">An illustrated field guide to the built environment — what every pole, box, marking, and drain actually does. Not an advocacy book at all, which is exactly why it's useful: it teaches you to read infrastructure. Good for anyone who wants to stop feeling like a tourist in these conversations.</p></div></div>
+
+          <div class="book"><div class="book-spine b5"></div><div class="book-info">
+            <div class="book-title">Sustainable Nation</div>
+            <div class="book-author">Douglas Farr</div>
+            <p class="book-note">Urban design patterns aimed at the bigger question of how places get built sustainably at scale. Denser and more professional in tone than the others here — better as a second or third read than a first.</p></div></div>
+
+          <div class="book"><div class="book-spine b6"></div><div class="book-info">
+            <div class="book-title">Building the Cycling City</div>
+            <div class="book-author">Melissa &amp; Chris Bruntlett</div>
+            <p class="book-note">The Dutch blueprint, and the antidote to "it only works there because of the culture." Documents how the Netherlands deliberately reversed course in the 1970s — and what five North American cities learned from copying it.</p></div></div>
+        </div>
+      </div>
+
+      <div class="res-section" id="rebates">
+        <div class="res-head">
+          <h3>Does your city have a bike rebate?</h3>
+          <p>Many cities, states, and utilities now offer e-bike rebates, tax credits, or point-of-sale vouchers, and these are often worth several hundred dollars. Most people do not realize their city runs one.</p>
+        </div>
+
+        <div class="rebate-box">
+          <div class="rb-search">
+            <div class="lbl">Search these exactly — swap in your city and state</div>
+            <div class="rb-q">"[your city] e-bike rebate"</div>
+            <div class="rb-q">"[your state] e-bike tax credit"</div>
+            <div class="rb-q">"[your city] e-bike voucher program"</div>
+            <div class="rb-q">"[your electric utility] e-bike rebate"</div>
+            <div class="rb-q">site:.gov "[your state]" ebike incentive</div>
+          </div>
+
+          <div class="rb-steps">
+            <div class="rb-step"><div class="n">01</div><strong>Check three levels, not one</strong>
+              <span>Rebates come from cities, states, <em>and</em> electric utilities — and they often stack. Colorado residents, for example, can combine a state point-of-sale credit with a separate Denver city voucher.</span></div>
+            <div class="rb-step"><div class="n">02</div><strong>Don't skip your power company</strong>
+              <span>Utility rebates are the most overlooked source by far. Many electric co-ops and municipal utilities fund them quietly with almost no promotion.</span></div>
+            <div class="rb-step"><div class="n">03</div><strong>Ask about income-qualified tiers</strong>
+              <span>Most programs offer substantially larger amounts for households under a certain income threshold, or for those on SNAP, Medicaid, or similar programs. These tiers are frequently 2–3× the standard rebate.</span></div>
+            <div class="rb-step"><div class="n">04</div><strong>Get on the notification list</strong>
+              <span>Popular voucher rounds sell out fast — Denver's have been claimed within minutes of release. If a program looks closed, sign up for alerts rather than giving up.</span></div>
+            <div class="rb-step"><div class="n">05</div><strong>Check the retailer requirement</strong>
+              <span>Point-of-sale programs usually require buying from a participating shop, and won't reimburse an online purchase after the fact. Confirm before you buy.</span></div>
+            <div class="rb-step"><div class="n">06</div><strong>Look for cargo bike bonuses</strong>
+              <span>Several programs add a separate top-up for cargo e-bikes, on the reasoning that they're most likely to replace car trips. Worth asking about if you're hauling kids or groceries.</span></div>
+          </div>
+
+          <p class="rb-warn"><strong>One caution:</strong> we deliberately aren't listing dollar amounts here. These programs change constantly — funding rounds open and close, amounts get cut mid-year, and several well-known programs have been paused entirely. Any list we published would be wrong within months. Search using the terms above and read the official program page before you buy. City and state <code>.gov</code> pages are the only source worth trusting on current amounts.</p>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="gi-panel" id="gi-glossary">
+      <h2 class="section-title">Glossary</h2>
+      <p class="section-sub">These are the words that get used in these rooms as though everyone already knows them. You can browse the list, or select terms and study them as flashcards.</p>
+
+      <input type="text" id="gl-search" class="vz-search" placeholder="Search a term — try road diet, HIN, daylighting…">
+
+      <div class="gl-modes">
+        <button class="gl-mode active" data-m="browse">Browse</button>
+        <button class="gl-mode" data-m="select">Select terms</button>
+        <button class="gl-mode" data-m="cards">Flashcards</button>
+        <button class="gl-mode" data-m="quiz">Quiz me</button>
+        <span class="sel-info" id="sel-info"></span>
+      </div>
+      <div class="gl-count" id="gl-count">26 terms</div>
+
+      <div id="study-controls"></div>
+
+      <div class="fc-stage" id="fc-stage">
+        <div class="study-bar">
+          <span class="sb-label">Flashcards</span>
+          <button class="sb-btn ghost" id="fc-shuffle">Shuffle</button>
+          <button class="sb-btn ghost" id="fc-exit">Back to list</button>
+          <span class="sb-count" id="fc-count"></span>
+        </div>
+        <div class="flashcard">
+          <div class="fc-inner" id="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-hint">Term</div>
+              <div class="fc-term" id="fc-term"></div>
+              <div class="fc-tap">Click the card to reveal the definition</div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-hint">Definition</div>
+              <p class="fc-def" id="fc-def"></p>
+              <div class="fc-tap">Click to flip back</div>
+            </div>
+          </div>
+        </div>
+        <div class="fc-nav">
+          <button class="sb-btn ghost" id="fc-prev" style="border-color:var(--line);color:var(--slate);">← Prev</button>
+          <div class="fc-progress"><i id="fc-bar"></i></div>
+          <button class="sb-btn" id="fc-next">Next →</button>
+        </div>
+      </div>
+
+      <div class="quiz-stage" id="quiz-stage">
+        <div class="study-bar">
+          <span class="sb-label">Quiz</span>
+          <button class="sb-btn ghost" id="qz-restart">Restart</button>
+          <button class="sb-btn ghost" id="qz-exit">Back to list</button>
+          <span class="sb-count" id="qz-count"></span>
+        </div>
+        <div id="quiz-body"></div>
+      </div>
+
+      <div class="gl-list" id="gl-list"><div class="gl-item" data-i="0" data-s="bulb-out / curb extension widening the sidewalk into the parking lane at a crossing. shortens the crossing distance and forces drivers to turn more slowly."><div class="gl-check">✓</div><div class="gl-term">Bulb-out / curb extension</div><p class="gl-def">Widening the sidewalk into the parking lane at a crossing. Shortens the crossing distance and forces drivers to turn more slowly.</p></div><div class="gl-item" data-i="1" data-s="capital improvement program (cip) the city’s multi-year list of funded construction projects. if your street isn’t in the cip, no amount of agreement gets it built."><div class="gl-check">✓</div><div class="gl-term">Capital Improvement Program (CIP)</div><p class="gl-def">The city’s multi-year list of funded construction projects. If your street isn’t in the CIP, no amount of agreement gets it built.</p></div><div class="gl-item" data-i="2" data-s="complete streets a policy that streets should be designed for everyone using them — walking, biking, transit, and driving — rather than for vehicle throughput alone."><div class="gl-check">✓</div><div class="gl-term">Complete Streets</div><p class="gl-def">A policy that streets should be designed for everyone using them — walking, biking, transit, and driving — rather than for vehicle throughput alone.</p></div><div class="gl-item" data-i="3" data-s="comprehensive plan a city’s long-range vision for growth and land use, usually looking 5 to 20 years out. individual projects are supposed to align with it — a useful thing to cite."><div class="gl-check">✓</div><div class="gl-term">Comprehensive plan</div><p class="gl-def">A city’s long-range vision for growth and land use, usually looking 5 to 20 years out. Individual projects are supposed to align with it — a useful thing to cite.</p></div><div class="gl-item" data-i="4" data-s="crash modification factor (cmf) a number estimating how much a specific treatment reduces crashes. the technical backbone behind claims like protected bike lanes cut crashes 53%."><div class="gl-check">✓</div><div class="gl-term">Crash modification factor (CMF)</div><p class="gl-def">A number estimating how much a specific treatment reduces crashes. The technical backbone behind claims like "protected bike lanes cut crashes 53%."</p></div><div class="gl-item" data-i="5" data-s="daylighting removing parking near a corner so drivers and pedestrians can see each other. often the lowest-cost fix for a dangerous intersection."><div class="gl-check">✓</div><div class="gl-term">Daylighting</div><p class="gl-def">Removing parking near a corner so drivers and pedestrians can see each other. Often the lowest-cost fix for a dangerous intersection.</p></div><div class="gl-item" data-i="6" data-s="high injury network (hin) the small share of a city’s streets where most severe and fatal crashes happen. in many cities under 10% of streets account for over half of traffic deaths, which is why the hin is where money goes first. ask whether your street is on it — it changes the conversation."><div class="gl-check">✓</div><div class="gl-term">High Injury Network (HIN)</div><p class="gl-def">The small share of a city’s streets where most severe and fatal crashes happen. In many cities under 10% of streets account for over half of traffic deaths, which is why the HIN is where money goes first. Ask whether your street is on it — it changes the conversation.</p></div><div class="gl-item" data-i="7" data-s="leading pedestrian interval (lpi) a signal that gives people on foot a few seconds of walk signal before cars get green. cheap, fast to install, and one of the most effective pedestrian safety tools available."><div class="gl-check">✓</div><div class="gl-term">Leading Pedestrian Interval (LPI)</div><p class="gl-def">A signal that gives people on foot a few seconds of walk signal before cars get green. Cheap, fast to install, and one of the most effective pedestrian safety tools available.</p></div><div class="gl-item" data-i="8" data-s="level of service (los) an a-through-f grade for how freely cars move through an intersection. historically the dominant metric in traffic engineering, and a major reason streets got wider: improving los usually meant adding lanes."><div class="gl-check">✓</div><div class="gl-term">Level of Service (LOS)</div><p class="gl-def">An A-through-F grade for how freely cars move through an intersection. Historically the dominant metric in traffic engineering, and a major reason streets got wider: improving LOS usually meant adding lanes.</p></div><div class="gl-item" data-i="9" data-s="micromobility small, lightweight vehicles: e-scooters, e-bikes, bike share. usually under 20 mph and often caught between the bike lane and the sidewalk in both design and regulation."><div class="gl-check">✓</div><div class="gl-term">Micromobility</div><p class="gl-def">Small, lightweight vehicles: e-scooters, e-bikes, bike share. Usually under 20 mph and often caught between the bike lane and the sidewalk in both design and regulation.</p></div><div class="gl-item" data-i="10" data-s="modal share the percentage of trips made by each mode — walking, biking, transit, driving. cities track it to see whether investment is shifting behavior."><div class="gl-check">✓</div><div class="gl-term">Modal share</div><p class="gl-def">The percentage of trips made by each mode — walking, biking, transit, driving. Cities track it to see whether investment is shifting behavior.</p></div><div class="gl-item" data-i="11" data-s="mpo metropolitan planning organization — the regional body that allocates federal transportation dollars across a metro area. in metro atlanta this is the atlanta regional commission (arc)."><div class="gl-check">✓</div><div class="gl-term">MPO</div><p class="gl-def">Metropolitan Planning Organization — the regional body that allocates federal transportation dollars across a metro area. In metro Atlanta this is the Atlanta Regional Commission (ARC).</p></div><div class="gl-item" data-i="12" data-s="multimodal serving more than one way of traveling. when a plan calls itself multimodal, ask which modes actually got space — the word is often applied generously."><div class="gl-check">✓</div><div class="gl-term">Multimodal</div><p class="gl-def">Serving more than one way of traveling. When a plan calls itself multimodal, ask which modes actually got space — the word is often applied generously.</p></div><div class="gl-item" data-i="13" data-s="protected bike lane a bike lane physically separated from traffic by bollards, planters, parked cars, or a curb. the distinction from a painted lane matters enormously — protection is what changes who is willing to ride."><div class="gl-check">✓</div><div class="gl-term">Protected bike lane</div><p class="gl-def">A bike lane physically separated from traffic by bollards, planters, parked cars, or a curb. The distinction from a painted lane matters enormously — protection is what changes who is willing to ride.</p></div><div class="gl-item" data-i="14" data-s="proven safety countermeasures fhwa’s list of treatments with strong evidence behind them. long used to settle arguments in public meetings — though five measures were quietly removed in july 2026."><div class="gl-check">✓</div><div class="gl-term">Proven Safety Countermeasures</div><p class="gl-def">FHWA’s list of treatments with strong evidence behind them. Long used to settle arguments in public meetings — though five measures were quietly removed in July 2026.</p></div><div class="gl-item" data-i="15" data-s="public comment period the portion of a meeting where residents can speak, usually limited to two or three minutes each. often near the beginning; check the agenda so you don’t miss it."><div class="gl-check">✓</div><div class="gl-term">Public comment period</div><p class="gl-def">The portion of a meeting where residents can speak, usually limited to two or three minutes each. Often near the beginning; check the agenda so you don’t miss it.</p></div><div class="gl-item" data-i="16" data-s="rezoning changing what can legally be built on a piece of land. the most common reason a planning meeting gets crowded."><div class="gl-check">✓</div><div class="gl-term">Rezoning</div><p class="gl-def">Changing what can legally be built on a piece of land. The most common reason a planning meeting gets crowded.</p></div><div class="gl-item" data-i="17" data-s="right-of-way (row) the full width of public land from property line to property line — not just the pavement. everything on the street competes for this fixed number of feet. when someone says there’s no room, this is what they mean."><div class="gl-check">✓</div><div class="gl-term">Right-of-way (ROW)</div><p class="gl-def">The full width of public land from property line to property line — not just the pavement. Everything on the street competes for this fixed number of feet. When someone says "there’s no room," this is what they mean.</p></div><div class="gl-item" data-i="18" data-s="road diet reconfiguring a street to have fewer travel lanes — classically four lanes down to three, with a center turn lane. the space freed up usually becomes bike lanes, parking, or wider sidewalks. also called a roadway reconfiguration when someone wants to avoid the word diet."><div class="gl-check">✓</div><div class="gl-term">Road diet</div><p class="gl-def">Reconfiguring a street to have fewer travel lanes — classically four lanes down to three, with a center turn lane. The space freed up usually becomes bike lanes, parking, or wider sidewalks. Also called a "roadway reconfiguration" when someone wants to avoid the word diet.</p></div><div class="gl-item" data-i="19" data-s="safe system approach the framework underneath vision zero. assumes people will make mistakes and designs the road so mistakes aren’t fatal — rather than trying to eliminate human error."><div class="gl-check">✓</div><div class="gl-term">Safe System approach</div><p class="gl-def">The framework underneath Vision Zero. Assumes people will make mistakes and designs the road so mistakes aren’t fatal — rather than trying to eliminate human error.</p></div><div class="gl-item" data-i="20" data-s="sneckdown a snowy-day curb extension — the untouched snow at a corner showing exactly how much pavement cars never actually use. informal, but persuasive."><div class="gl-check">✓</div><div class="gl-term">Sneckdown</div><p class="gl-def">A snowy-day curb extension — the untouched snow at a corner showing exactly how much pavement cars never actually use. Informal, but persuasive.</p></div><div class="gl-item" data-i="21" data-s="speed safety camera automated enforcement that tickets speeders. politically contested, but among the most effective speed-reduction tools measured."><div class="gl-check">✓</div><div class="gl-term">Speed safety camera</div><p class="gl-def">Automated enforcement that tickets speeders. Politically contested, but among the most effective speed-reduction tools measured.</p></div><div class="gl-item" data-i="22" data-s="traffic calming physical design that slows drivers — speed humps, chicanes, narrowed lanes, raised crossings. distinct from enforcement, which relies on someone being caught."><div class="gl-check">✓</div><div class="gl-term">Traffic calming</div><p class="gl-def">Physical design that slows drivers — speed humps, chicanes, narrowed lanes, raised crossings. Distinct from enforcement, which relies on someone being caught.</p></div><div class="gl-item" data-i="23" data-s="traffic study an analysis of how a project would affect vehicle movement. worth asking whether it counted people walking and biking, or only cars."><div class="gl-check">✓</div><div class="gl-term">Traffic study</div><p class="gl-def">An analysis of how a project would affect vehicle movement. Worth asking whether it counted people walking and biking, or only cars.</p></div><div class="gl-item" data-i="24" data-s="variance permission to depart from zoning rules for a specific property. frequently on npu agendas."><div class="gl-check">✓</div><div class="gl-term">Variance</div><p class="gl-def">Permission to depart from zoning rules for a specific property. Frequently on NPU agendas.</p></div><div class="gl-item" data-i="25" data-s="vision zero a commitment to eliminate traffic deaths and serious injuries, built on the premise that these are preventable design outcomes rather than accidents. originated in sweden in 1997."><div class="gl-check">✓</div><div class="gl-term">Vision Zero</div><p class="gl-def">A commitment to eliminate traffic deaths and serious injuries, built on the premise that these are preventable design outcomes rather than accidents. Originated in Sweden in 1997.</p></div></div>
+      <div class="gl-empty" id="gl-empty" style="display: none;">No match yet. Heard a term that is not here? <a href="yourstreet.html">Send it over</a> and we will add it!</div>
+    </div>
+    </div>
+
+  
+</section>
+
+<script>
+(function(){
+  document.querySelectorAll('.gi-tab').forEach(function(t){
+    t.addEventListener('click',function(){
+      document.querySelectorAll('.gi-tab').forEach(function(x){x.classList.remove('active');});
+      document.querySelectorAll('.gi-panel').forEach(function(x){x.classList.remove('active');});
+      t.classList.add('active');
+      document.getElementById('gi-'+t.dataset.t).classList.add('active');
+    });
+  });
+
+  var TERMS=[
+   ['Road diet','Reconfiguring a street to have fewer travel lanes \u2014 classically four lanes down to three, with a center turn lane. The space freed up usually becomes bike lanes, parking, or wider sidewalks. Also called a "roadway reconfiguration" when someone wants to avoid the word diet.'],
+   ['High Injury Network (HIN)','The small share of a city\u2019s streets where most severe and fatal crashes happen. In many cities under 10% of streets account for over half of traffic deaths, which is why the HIN is where money goes first. Ask whether your street is on it \u2014 it changes the conversation.'],
+   ['Vision Zero','A commitment to eliminate traffic deaths and serious injuries, built on the premise that these are preventable design outcomes rather than accidents. Originated in Sweden in 1997.'],
+   ['Safe System approach','The framework underneath Vision Zero. Assumes people will make mistakes and designs the road so mistakes aren\u2019t fatal \u2014 rather than trying to eliminate human error.'],
+   ['Right-of-way (ROW)','The full width of public land from property line to property line \u2014 not just the pavement. Everything on the street competes for this fixed number of feet. When someone says "there\u2019s no room," this is what they mean.'],
+   ['Leading Pedestrian Interval (LPI)','A signal that gives people on foot a few seconds of walk signal before cars get green. Cheap, fast to install, and one of the most effective pedestrian safety tools available.'],
+   ['Daylighting','Removing parking near a corner so drivers and pedestrians can see each other. Often the lowest-cost fix for a dangerous intersection.'],
+   ['Bulb-out / curb extension','Widening the sidewalk into the parking lane at a crossing. Shortens the crossing distance and forces drivers to turn more slowly.'],
+   ['Traffic calming','Physical design that slows drivers \u2014 speed humps, chicanes, narrowed lanes, raised crossings. Distinct from enforcement, which relies on someone being caught.'],
+   ['Protected bike lane','A bike lane physically separated from traffic by bollards, planters, parked cars, or a curb. The distinction from a painted lane matters enormously \u2014 protection is what changes who is willing to ride.'],
+   ['Complete Streets','A policy that streets should be designed for everyone using them \u2014 walking, biking, transit, and driving \u2014 rather than for vehicle throughput alone.'],
+   ['Level of Service (LOS)','An A-through-F grade for how freely cars move through an intersection. Historically the dominant metric in traffic engineering, and a major reason streets got wider: improving LOS usually meant adding lanes.'],
+   ['Modal share','The percentage of trips made by each mode \u2014 walking, biking, transit, driving. Cities track it to see whether investment is shifting behavior.'],
+   ['Micromobility','Small, lightweight vehicles: e-scooters, e-bikes, bike share. Usually under 20 mph and often caught between the bike lane and the sidewalk in both design and regulation.'],
+   ['Rezoning','Changing what can legally be built on a piece of land. The most common reason a planning meeting gets crowded.'],
+   ['Variance','Permission to depart from zoning rules for a specific property. Frequently on NPU agendas.'],
+   ['Comprehensive plan','A city\u2019s long-range vision for growth and land use, usually looking 5 to 20 years out. Individual projects are supposed to align with it \u2014 a useful thing to cite.'],
+   ['Public comment period','The portion of a meeting where residents can speak, usually limited to two or three minutes each. Often near the beginning; check the agenda so you don\u2019t miss it.'],
+   ['Capital Improvement Program (CIP)','The city\u2019s multi-year list of funded construction projects. If your street isn\u2019t in the CIP, no amount of agreement gets it built.'],
+   ['MPO','Metropolitan Planning Organization \u2014 the regional body that allocates federal transportation dollars across a metro area. In metro Atlanta this is the Atlanta Regional Commission (ARC).'],
+   ['Crash modification factor (CMF)','A number estimating how much a specific treatment reduces crashes. The technical backbone behind claims like "protected bike lanes cut crashes 53%."'],
+   ['Proven Safety Countermeasures','FHWA\u2019s list of treatments with strong evidence behind them. Long used to settle arguments in public meetings \u2014 though five measures were quietly removed in July 2026.'],
+   ['Traffic study','An analysis of how a project would affect vehicle movement. Worth asking whether it counted people walking and biking, or only cars.'],
+   ['Sneckdown','A snowy-day curb extension \u2014 the untouched snow at a corner showing exactly how much pavement cars never actually use. Informal, but persuasive.'],
+   ['Speed safety camera','Automated enforcement that tickets speeders. Politically contested, but among the most effective speed-reduction tools measured.'],
+   ['Multimodal','Serving more than one way of traveling. When a plan calls itself multimodal, ask which modes actually got space \u2014 the word is often applied generously.']
+  ];
+
+
+  var list=document.getElementById('gl-list'),
+      search=document.getElementById('gl-search'),
+      empty=document.getElementById('gl-empty'),
+      count=document.getElementById('gl-count'),
+      selInfo=document.getElementById('sel-info'),
+      fcStage=document.getElementById('fc-stage'),
+      qzStage=document.getElementById('quiz-stage');
+
+  TERMS.sort(function(a,b){return a[0].localeCompare(b[0]);});
+  var picked={},mode='browse';
+
+  list.innerHTML=TERMS.map(function(t,i){
+    return '<div class="gl-item" data-i="'+i+'" data-s="'+(t[0]+' '+t[1]).toLowerCase().replace(/"/g,'')+'">'+
+      '<div class="gl-check">\u2713</div>'+
+      '<div class="gl-term">'+t[0]+'</div><p class="gl-def">'+t[1]+'</p></div>';
+  }).join('');
+  var items=Array.prototype.slice.call(list.querySelectorAll('.gl-item'));
+
+  items.forEach(function(it){
+    it.addEventListener('click',function(){
+      if(mode!=='select')return;
+      var i=it.dataset.i;
+      if(picked[i]){delete picked[i];it.classList.remove('picked');}
+      else{picked[i]=true;it.classList.add('picked');}
+      updSel();
+    });
+  });
+
+  function pickedList(){
+    var k=Object.keys(picked);
+    return k.length?k.map(function(i){return TERMS[i];}):TERMS.slice();
+  }
+  function updSel(){
+    var n=Object.keys(picked).length;
+    selInfo.textContent=n?n+' selected':'';
+  }
+
+  function setMode(m){
+    mode=m;
+    document.querySelectorAll('.gl-mode').forEach(function(b){b.classList.toggle('active',b.dataset.m===m);});
+    items.forEach(function(it){it.classList.toggle('selectable',m==='select');});
+    var browsing=(m==='browse'||m==='select');
+    list.style.display=browsing?'':'none';
+    search.style.display=browsing?'':'none';
+    count.style.display=browsing?'':'none';
+    fcStage.classList.toggle('on',m==='cards');
+    qzStage.classList.toggle('on',m==='quiz');
+    if(m==='cards')startCards();
+    if(m==='quiz')startQuiz();
+    updSel();
+  }
+  document.querySelectorAll('.gl-mode').forEach(function(b){
+    b.addEventListener('click',function(){setMode(b.dataset.m);});
+  });
+
+  /* ---------- flashcards ---------- */
+  var deck=[],ci=0;
+  var fcInner=document.getElementById('fc-inner');
+  function drawCard(){
+    if(!deck.length)return;
+    var c=deck[ci];
+    fcInner.classList.remove('flipped');
+    document.getElementById('fc-term').textContent=c[0];
+    document.getElementById('fc-def').textContent=c[1];
+    document.getElementById('fc-count').textContent=(ci+1)+' of '+deck.length;
+    document.getElementById('fc-bar').style.width=((ci+1)/deck.length*100)+'%';
+  }
+  function startCards(){deck=pickedList().slice();ci=0;drawCard();}
+  fcInner.addEventListener('click',function(){fcInner.classList.toggle('flipped');});
+  document.getElementById('fc-next').addEventListener('click',function(){ci=(ci+1)%deck.length;drawCard();});
+  document.getElementById('fc-prev').addEventListener('click',function(){ci=(ci-1+deck.length)%deck.length;drawCard();});
+  document.getElementById('fc-shuffle').addEventListener('click',function(){
+    for(var i=deck.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=deck[i];deck[i]=deck[j];deck[j]=t;}
+    ci=0;drawCard();});
+  document.getElementById('fc-exit').addEventListener('click',function(){setMode('browse');});
+
+  /* ---------- quiz ---------- */
+  var qz=[],qi=0,score=0;
+  function startQuiz(){
+    var pool=pickedList().slice();
+    for(var i=pool.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=pool[i];pool[i]=pool[j];pool[j]=t;}
+    qz=pool.slice(0,Math.min(10,pool.length));qi=0;score=0;drawQ();
+  }
+  function drawQ(){
+    var body=document.getElementById('quiz-body');
+    document.getElementById('qz-count').textContent=Math.min(qi+1,qz.length)+' of '+qz.length;
+    if(qi>=qz.length){
+      var pct=Math.round(score/qz.length*100);
+      var msg=pct>=90?'You could hold your own in a technical meeting.':
+              pct>=70?'Solid. You would follow most of what gets said in that room.':
+              pct>=50?'Getting there \u2014 run the flashcards on the ones that tripped you up.':
+              'Worth a pass through the flashcards first. Nobody is born knowing this vocabulary.';
+      body.innerHTML='<div class="quiz-score"><div class="qs-num">'+score+'</div>'+
+        '<div class="qs-of">of '+qz.length+' correct</div><p>'+msg+'</p>'+
+        '<button class="sb-btn" id="qz-again">Try again</button></div>';
+      document.getElementById('qz-again').addEventListener('click',startQuiz);
+      document.getElementById('qz-count').textContent='Complete';
+      return;
+    }
+    var q=qz[qi];
+    var wrong=TERMS.filter(function(t){return t[0]!==q[0];});
+    for(var i=wrong.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=wrong[i];wrong[i]=wrong[j];wrong[j]=t;}
+    var opts=[q].concat(wrong.slice(0,3));
+    for(var i=opts.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=opts[i];opts[i]=opts[j];opts[j]=t;}
+
+    body.innerHTML='<div class="quiz-card"><p class="quiz-q"><strong>Which term does this describe?</strong>'+q[1]+'</p>'+
+      '<div class="quiz-opts">'+opts.map(function(o,i){
+        return '<button class="quiz-opt" data-t="'+o[0].replace(/"/g,'')+'">'+o[0]+'</button>';}).join('')+
+      '</div><div class="quiz-feedback" id="qz-fb" style="display:none;"></div></div>';
+
+    body.querySelectorAll('.quiz-opt').forEach(function(b){
+      b.addEventListener('click',function(){
+        var ok=b.dataset.t===q[0].replace(/"/g,'');
+        if(ok)score++;
+        body.querySelectorAll('.quiz-opt').forEach(function(x){
+          x.disabled=true;
+          if(x.dataset.t===q[0].replace(/"/g,''))x.classList.add('right');
+          else if(x===b)x.classList.add('wrong');
+        });
+        var fb=document.getElementById('qz-fb');
+        fb.style.display='block';
+        fb.innerHTML=(ok?'Correct. ':'The answer was <strong>'+q[0]+'</strong>. ')+
+          '<button class="sb-btn" style="margin-left:8px;" id="qz-next">'+(qi+1>=qz.length?'See score':'Next')+'</button>';
+        document.getElementById('qz-next').addEventListener('click',function(){qi++;drawQ();});
+      });
+    });
+  }
+  document.getElementById('qz-restart').addEventListener('click',startQuiz);
+  document.getElementById('qz-exit').addEventListener('click',function(){setMode('browse');});
+
+  /* ---------- search ---------- */
+  function upd(){
+    var q=search.value.trim().toLowerCase(),n=0;
+    items.forEach(function(it){
+      var hit=!q||it.dataset.s.indexOf(q)>-1;
+      it.style.display=hit?'':'none';if(hit)n++;
+    });
+    empty.style.display=n?'none':'block';
+    count.textContent=n+(n===1?' term':' terms')+(mode==='select'?' \u00b7 click to select for study':'');
+  }
+  search.addEventListener('input',upd);
+  setMode('browse');upd();
+})();
+</script>
+<section class="ideas" id="ideas">
+  <div class="wrap">
+    <div class="ideas-box">
+      <div class="ideas-intro">
+        <div class="label">Your turn</div>
+        <h3>Have a question, a guest idea, or a story worth telling?</h3>
+        <p>Working on something in your city? Wish someone would cover a topic nobody talks about? Send it over — listener questions and suggestions shape what gets made next.</p>
+      </div>
+      <form class="ideas-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="field-row">
+          <div>
+            <label for="idea-name">Name</label>
+            <input type="text" id="idea-name" name="name" placeholder="Your name" required="">
+          </div>
+          <div>
+            <label for="idea-email">Email</label>
+            <input type="email" id="idea-email" name="email" placeholder="you@email.com" required="">
+          </div>
+        </div>
+        <div>
+          <label for="idea-type">What's this about?</label>
+          <select id="idea-type" name="type">
+            <option>A question for the show</option>
+            <option>A guest suggestion</option>
+            <option>A topic idea</option>
+            <option>Feedback on an episode</option>
+            <option>Something else</option>
+          </select>
+        </div>
+        <div>
+          <label for="idea-message">Tell me more</label>
+          <textarea id="idea-message" name="message" placeholder="What's on your mind?" required=""></textarea>
+        </div>
+        <button type="submit" class="ideas-submit">Send it over</button>
+        <p class="ideas-note">Goes straight to jeremiah.laduca@acityinmotion.com. No list signup, and I read every one.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="contact">
+  <div class="wrap contact-grid">
+    <div class="contact-card">
+      <div class="label">Get in touch</div>
+      <div class="value"><a href="mailto:jeremiah.laduca@acityinmotion.com">jeremiah.laduca@acityinmotion.com</a></div>
+    </div>
+    <div class="contact-card">
+      <div class="label">Follow along</div>
+      <div class="social-row">
+        <a href="https://www.linkedin.com/in/jeremiah-laduca/" target="_blank" rel="noopener" class="social-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"></rect><path d="M7.5 10.5v6M7.5 7.5v.01M11.5 16.5v-6M11.5 13a2.5 2.5 0 0 1 5 0v3.5"></path></svg>LinkedIn</a>
+        <a href="https://www.instagram.com/acityinmotion_/" target="_blank" rel="noopener" class="social-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"></circle></svg>Instagram</a>
+        <a href="https://www.youtube.com/@ACityInMotion" target="_blank" rel="noopener" class="social-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="5.5" width="19" height="13" rx="4"></rect><path d="M10 9.5l5.5 3-5.5 3z" fill="currentColor" stroke="none"></path></svg>YouTube</a>
+        <a href="mailto:jeremiah.laduca@acityinmotion.com" class="social-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg>Email</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="brand-mini">A City in Motion</div>
+    <div class="foot-links">
+      <a href="news.html">News</a>
+      <a href="mailto:jeremiah.laduca@acityinmotion.com">jeremiah.laduca@acityinmotion.com</a>
+      <a href="https://www.linkedin.com/in/jeremiah-laduca/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://www.instagram.com/acityinmotion_/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.youtube.com/@ACityInMotion" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://podcasts.apple.com/us/podcast/a-city-in-motion/id1836499244" target="_blank" rel="noopener">Apple Podcasts</a>
+      <a href="https://open.spotify.com/show/5Xfp8mXuhI6pxVcqMUVRK0" target="_blank" rel="noopener">Spotify</a>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;bddffa63990c4fa6b914b19612932f66&quot;,&quot;r&quot;:1,&quot;spa&quot;:2}" crossorigin="anonymous"></script>
+
+
+</body></html>
