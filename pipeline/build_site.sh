@@ -1,4 +1,5 @@
-#!/bin/sh
+sha="$(git -C "$ROOT" rev-parse --short HEAD 2>/dev/null || true)"
+case "$sha" in *[!0-9a-f]*|"") sha="$(printf %.7s "${WORKERS_CI_COMMIT_SHA:-local}")" ;; esac#!/bin/sh
 # Build acityinmotion.com into ./dist.
 # Runs in Cloudflare Workers Builds (build command: sh pipeline/build_site.sh)
 # and locally. Plain POSIX sh: no Node needed to build, only to deploy.
