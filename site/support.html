@@ -99,6 +99,12 @@ nav.links a:hover,nav.links a.active{color:var(--navy);}
 }
 [hidden]{display:none !important;}
 
+.give-actions .btn{min-width:92px;}
+.goes{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:24px;}
+.goes-item{
+  background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px 24px;
+  display:flex;flex-direction:column;gap:8px;
+}
 .other-ways{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:24px;}
 .way{
   background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px 26px;
@@ -124,12 +130,14 @@ footer .foot-links a:hover{color:var(--navy);}
 @media (max-width:900px){
   nav.links{display:none;}
   .other-ways{grid-template-columns:1fr;}
+  .goes{grid-template-columns:repeat(2,1fr);}
 }
 @media (max-width:560px){
   .wrap{padding:0 20px;}
   .page-head h1{font-size:34px;}
   .give-card{padding:28px 22px;}
-  .give-actions .btn{width:100%;}
+  .give-actions .btn{flex:1 1 40%;padding:14px 12px;white-space:nowrap;}
+  .goes{grid-template-columns:1fr;}
 }
 </style>
 <!-- Privacy-friendly analytics by Plausible -->
@@ -159,10 +167,7 @@ footer .foot-links a:hover{color:var(--navy);}
 <section class="page-head">
   <div class="wrap">
     <h1>Support the show</h1>
-    <!-- COPY TO CONFIRM: one or two sentences, in Jeremiah's words, on what
-         contributions pay for. Left generic on purpose: nothing here should
-         claim how money is used until he says so. -->
-    <p>If A City in Motion is useful to you, you can chip in to help keep it going.</p>
+    <p>A City in Motion is something I make to share information and ideas about how we move. If it is useful to you, you can chip in to help keep it going.</p>
   </div>
 </section>
 
@@ -170,20 +175,42 @@ footer .foot-links a:hover{color:var(--navy);}
   <div class="wrap">
     <div class="give-card">
       <div class="give-eyebrow">Chip in</div>
-      <h2>Give what it's worth to you</h2>
-      <p>Pick any amount. Payment is handled on a secure checkout page, and no card details ever touch this site.</p>
+      <h2>Pick an amount</h2>
+      <p>Payment is handled by Stripe on a secure checkout page. No card details ever touch this site.</p>
 
       <div class="give-actions" id="give-actions" hidden>
-        <a class="btn btn-primary" id="give-once" target="_blank" rel="noopener" hidden>Give once</a>
-        <a class="btn btn-secondary" id="give-monthly" target="_blank" rel="noopener" hidden>Give monthly</a>
+        <a class="btn btn-primary" data-give="five" target="_blank" rel="noopener" hidden>$5</a>
+        <a class="btn btn-primary" data-give="ten" target="_blank" rel="noopener" hidden>$10</a>
+        <a class="btn btn-primary" data-give="twenty" target="_blank" rel="noopener" hidden>$20</a>
+        <a class="btn btn-secondary" data-give="custom" target="_blank" rel="noopener" hidden>Other amount</a>
       </div>
       <div class="give-closed" id="give-closed">Giving opens soon. Thanks for asking.</div>
 
-      <!-- TAX LINE TO CONFIRM before launch. Use exactly one, whichever is true:
-           "A City in Motion is not a registered nonprofit. Contributions are not tax-deductible."
-           or the correct 501(c)(3) / fiscal-sponsor statement with the EIN.
-           Do not publish either until Jeremiah confirms which applies. -->
-      <p class="give-note" id="give-note" hidden></p>
+      <p class="give-note">A City in Motion is a personal business, not a registered nonprofit. Contributions are not tax-deductible.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="wrap">
+    <h2 class="section-title">Where it goes</h2>
+    <div class="goes">
+      <div class="goes-item">
+        <span class="way-title">Keeping the show going</span>
+        <span class="way-desc">Making and publishing new episodes.</span>
+      </div>
+      <div class="goes-item">
+        <span class="way-title">Meeting people in person</span>
+        <span class="way-desc">Getting out to talk with the people doing the work, face to face.</span>
+      </div>
+      <div class="goes-item">
+        <span class="way-title">Tools everyone can use</span>
+        <span class="way-desc">Building things anyone can use to understand their own street.</span>
+      </div>
+      <div class="goes-item">
+        <span class="way-title">Learning from other places</span>
+        <span class="way-desc">Bringing back knowledge from around the country and the world.</span>
+      </div>
     </div>
   </div>
 </section>
@@ -231,31 +258,33 @@ footer .foot-links a:hover{color:var(--navy);}
 /* ---------------------------------------------------------------------------
    The only thing to edit to turn giving on.
 
-   Paste the hosted checkout links from your payment provider between the
-   quotes. These are ordinary public links: safe to commit, no keys involved.
-   Leave one empty to hide that button. Leave both empty and the page shows
-   "Giving opens soon" instead of a button that goes nowhere.
+   Paste each Stripe Payment Link between the quotes. They look like
+   https://buy.stripe.com/abc123 and are ordinary public links: safe to
+   commit, no keys involved.
+
+   A button only appears once its link is filled in. With all four empty the
+   page shows "Giving opens soon" instead of buttons that go nowhere.
 --------------------------------------------------------------------------- */
 var GIVING = {
-  once:    "",   // one-time, e.g. a Stripe Payment Link
-  monthly: "",   // recurring, optional
-  taxNote: ""    // the confirmed tax line, shown under the buttons
+  five:   "",   // Payment Link for a fixed $5
+  ten:    "",   // Payment Link for a fixed $10
+  twenty: "",   // Payment Link for a fixed $20
+  custom: ""    // Payment Link set to "Customers choose what to pay"
 };
 
 (function () {
-  function ok(u) { return typeof u === "string" && /^https:\/\//.test(u); }
-  var once = document.getElementById("give-once");
-  var monthly = document.getElementById("give-monthly");
   var any = false;
-  if (ok(GIVING.once))    { once.href = GIVING.once;       once.hidden = false;    any = true; }
-  if (ok(GIVING.monthly)) { monthly.href = GIVING.monthly; monthly.hidden = false; any = true; }
+  var buttons = document.querySelectorAll("[data-give]");
+  for (var i = 0; i < buttons.length; i++) {
+    var url = GIVING[buttons[i].getAttribute("data-give")];
+    if (typeof url === "string" && /^https:\/\//.test(url)) {
+      buttons[i].href = url;
+      buttons[i].hidden = false;
+      any = true;
+    }
+  }
   document.getElementById("give-actions").hidden = !any;
   document.getElementById("give-closed").hidden = any;
-  if (GIVING.taxNote) {
-    var note = document.getElementById("give-note");
-    note.textContent = GIVING.taxNote;
-    note.hidden = false;
-  }
 })();
 </script>
 
