@@ -136,7 +136,7 @@ footer .foot-links a:hover{color:var(--navy);}
   .wrap{padding:0 20px;}
   .page-head h1{font-size:34px;}
   .give-card{padding:28px 22px;}
-  .give-actions .btn{flex:1 1 40%;padding:14px 12px;white-space:nowrap;}
+  .give-actions .btn{flex:1 1 100%;white-space:nowrap;}
   .goes{grid-template-columns:1fr;}
 }
 </style>
@@ -176,12 +176,10 @@ footer .foot-links a:hover{color:var(--navy);}
     <div class="give-card">
       <div class="give-eyebrow">Chip in</div>
       <h2>Pick an amount</h2>
-      <p>Payment is handled by Stripe on a secure checkout page. No card details ever touch this site.</p>
+      <p>Choose $5, $10 or $20, or enter your own amount. Payment is handled by Stripe on a secure checkout page. No card details ever touch this site.</p>
 
       <div class="give-actions" id="give-actions" hidden>
-        <a class="btn btn-primary" data-give="five" target="_blank" rel="noopener" hidden>$5</a>
-        <a class="btn btn-primary" data-give="ten" target="_blank" rel="noopener" hidden>$10</a>
-        <a class="btn btn-primary" data-give="twenty" target="_blank" rel="noopener" hidden>$20</a>
+        <a class="btn btn-primary" data-give="quick" target="_blank" rel="noopener" hidden>Give $5, $10 or $20</a>
         <a class="btn btn-secondary" data-give="custom" target="_blank" rel="noopener" hidden>Other amount</a>
       </div>
       <div class="give-closed" id="give-closed">Giving opens soon. Thanks for asking.</div>
@@ -264,20 +262,16 @@ footer .foot-links a:hover{color:var(--navy);}
 
 <script>
 /* ---------------------------------------------------------------------------
-   The only thing to edit to turn giving on.
+   The Stripe Payment Links behind the two buttons.
 
-   Paste each Stripe Payment Link between the quotes. They look like
-   https://buy.stripe.com/abc123 and are ordinary public links: safe to
-   commit, no keys involved.
-
-   A button only appears once its link is filled in. With all four empty the
-   page shows "Giving opens soon" instead of buttons that go nowhere.
+   These are ordinary public links: safe to commit, no keys involved. To
+   change one, replace the address between the quotes. A button only appears
+   when its link is filled in. With both empty the page shows "Giving opens
+   soon" instead of buttons that go nowhere.
 --------------------------------------------------------------------------- */
 var GIVING = {
-  five:   "",   // Payment Link for a fixed $5
-  ten:    "",   // Payment Link for a fixed $10
-  twenty: "",   // Payment Link for a fixed $20
-  custom: ""    // Payment Link set to "Customers choose what to pay"
+  quick:  "https://buy.stripe.com/00waEQ44VeEP44R3ao1B601",   // $5, $10 or $20, chosen at checkout
+  custom: "https://buy.stripe.com/7sYaEQ58ZcwH0SFh1e1B600"    // supporter enters any amount
 };
 
 (function () {
