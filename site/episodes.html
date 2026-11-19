@@ -193,6 +193,12 @@ nav.links a:hover,nav.links a.active{color:var(--navy);}
   padding:13px 24px;border-radius:24px;cursor:pointer;transition:.15s;
 }
 .newsletter button:hover{background:#C9BAE3;}
+/* HubSpot newsletter signup. The form renders in HubSpot's own frame, so it
+   sits on a light card that reads well on the navy band whatever HubSpot's
+   form theme is. Its id and region come from the embed code in HubSpot. */
+.newsletter-form{background:var(--card);color:var(--ink);border-radius:18px;padding:16px 20px;flex:1 1 340px;max-width:460px;min-height:96px;}
+.newsletter-fallback{color:var(--ink);font-size:14px;}
+.newsletter-fallback a{text-decoration:underline;}
 
 /* ---- Ideas / questions box ---- */
 .ideas{padding:56px 0 8px;}
@@ -302,6 +308,7 @@ footer .foot-links a:hover{color:var(--navy);}
   .field-row{grid-template-columns:1fr;}
   .ideas-submit{width:100%;text-align:center;}
   .newsletter .wrap{flex-direction:column;align-items:flex-start;}
+  .newsletter-form{flex:none;width:100%;max-width:none;}
   .listen-band{flex-direction:column;align-items:flex-start;}
   .hero h1{font-size:32px;}
 }
@@ -862,10 +869,11 @@ footer .foot-links a:hover{color:var(--navy);}
       <h3>Be the first to hear it.</h3>
       <p>One email when a new Vision Zero Series episode lands — no spam, no filler.</p>
     </div>
-    <form>
-      <input type="email" placeholder="you@email.com" required="">
-      <button type="submit">Keep me posted</button>
-    </form>
+    <div class="newsletter-form">
+      <div class="hs-form-frame" data-region="na2" data-form-id="df939b43-ddd2-41b1-b632-b70234284daa" data-portal-id="247092049"></div>
+      <noscript><p class="newsletter-fallback">To sign up, email <a href="mailto:jeremiah.laduca@acityinmotion.com">jeremiah.laduca@acityinmotion.com</a>.</p></noscript>
+    </div>
+    <script src="https://js-na2.hsforms.net/forms/embed/247092049.js" defer></script>
   </div>
 </section>
 
