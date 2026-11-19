@@ -239,6 +239,9 @@ nav.links a:hover,nav.links a.active{color:var(--navy);}
 }
 .ideas-submit:hover{background:var(--navy-2);transform:translateY(-1px);}
 .ideas-note{font-size:12px;color:var(--slate);margin-top:2px;}
+.form-fallback{font-size:14px;line-height:1.5;color:var(--ink);}
+.form-fallback a{font-weight:600;text-decoration:underline;}
+.newsletter .form-fallback{color:var(--ink);max-width:none;}
 
 /* ---- Contact section ---- */
 .contact{padding:60px 0 20px;}
@@ -843,6 +846,7 @@ footer .foot-links a:hover{color:var(--navy);}
     </div>
     <div class="newsletter-form">
       <div class="hs-form-frame" data-region="na2" data-form-id="df939b43-ddd2-41b1-b632-b70234284daa" data-portal-id="247092049"></div>
+        <p class="form-fallback" hidden>The signup form didn’t load. That can happen on some work networks or with ad blockers. <a href="mailto:jeremiah.laduca@acityinmotion.com?subject=Subscribe%20to%20the%20A%20City%20in%20Motion%20newsletter">Email me to subscribe</a>.</p>
       <noscript><p class="newsletter-fallback">To sign up, email <a href="mailto:jeremiah.laduca@acityinmotion.com">jeremiah.laduca@acityinmotion.com</a>.</p></noscript>
     </div>
   </div>
@@ -858,6 +862,7 @@ footer .foot-links a:hover{color:var(--navy);}
       </div>
       <div class="ideas-form">
         <div class="hs-form-frame" data-region="na2" data-form-id="0f64db1f-f8b6-47a1-8673-8597f9aab54e" data-portal-id="247092049"></div>
+        <p class="form-fallback" hidden>The contact form didn’t load. That can happen on some work networks or with ad blockers. <a href="mailto:jeremiah.laduca@acityinmotion.com?subject=Message%20for%20A%20City%20in%20Motion">Email me instead</a>.</p>
         <noscript><p class="ideas-note">To get in touch, email <a href="mailto:jeremiah.laduca@acityinmotion.com">jeremiah.laduca@acityinmotion.com</a>.</p></noscript>
         <p class="ideas-note">Goes straight to me, and I read every one. Sending a message does not sign you up for the newsletter.</p>
       </div>
@@ -902,5 +907,25 @@ footer .foot-links a:hover{color:var(--navy);}
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;bddffa63990c4fa6b914b19612932f66&quot;,&quot;r&quot;:1,&quot;spa&quot;:2}" crossorigin="anonymous"></script>
 
 
-<script src="https://js-na2.hsforms.net/forms/embed/247092049.js" defer></script>
+<script>
+/* If HubSpot's form script is blocked (some work networks, ad blockers) or
+   slow, show the email fallback under each form instead of an empty box.
+   Re-checked later so a form that loads slowly hides the fallback again. */
+(function () {
+  function check() {
+    var frames = document.querySelectorAll(".hs-form-frame");
+    for (var i = 0; i < frames.length; i++) {
+      var loaded = frames[i].childElementCount > 0 || frames[i].shadowRoot;
+      var fallback = frames[i].parentNode.querySelector(".form-fallback");
+      if (fallback) fallback.hidden = !!loaded;
+    }
+  }
+  window.hsFormsFailed = check;
+  window.addEventListener("load", function () {
+    setTimeout(check, 6000);
+    setTimeout(check, 15000);
+  });
+})();
+</script>
+<script src="https://js-na2.hsforms.net/forms/embed/247092049.js" defer onerror="hsFormsFailed()"></script>
 </body></html>
